@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monitor U+I del ecosistema de apoyos</title>
+<meta name="description" content="Visión anual y semestral de los instrumentos de apoyo a empresas del ecosistema uruguayo de CTI: empresas asistidas, apoyos, montos aprobados y ejecutados, con desagregación dinámica por institución, mecanismo, necesidad, tamaño, sector y territorio.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+ color-scheme:light;
+ --ground:#f4f6fa; --surface:#ffffff; --surface2:#eef1f7;
+ --ink:#141c33; --ink2:#4a5468; --muted:#7d8697; --hair:#dde2ec; --ring:rgba(20,28,51,.10);
+ --brand:#25408d; --brand-deep:#182a5e; --brand-soft:#e4e9f6; --brand-ink:#25408d;
+ --accent:#b4493f;
+ --seq1:#cde2fb; --seq2:#9ec5f4; --seq3:#6da7ec; --seq4:#3987e5; --seq5:#256abf; --seq6:#184f95; --seq7:#0d366b;
+ --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b; --good-ink:#006300;
+ --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948; --otros:#9aa3b2;
+ --grid:#e6e9f0; --axis:#b9c0cf;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ color-scheme:dark;
+ --ground:#0e1320; --surface:#161c2b; --surface2:#1d2436;
+ --ink:#f2f4f9; --ink2:#c3c9d6; --muted:#8b93a5; --hair:#2a3245; --ring:rgba(255,255,255,.10);
+ --brand:#8aa9ee; --brand-deep:#c5d4f7; --brand-soft:#22304f; --brand-ink:#b7c8f2;
+ --accent:#e0776c;
+ --seq1:#0d366b; --seq2:#104281; --seq3:#184f95; --seq4:#256abf; --seq5:#3987e5; --seq6:#6da7ec; --seq7:#9ec5f4;
+ --good-ink:#0ca30c;
+ --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767; --otros:#6b7383;
+ --grid:#242c3e; --axis:#3a4358;
+}}
+:root[data-theme="dark"]{
+ color-scheme:dark;
+ --ground:#0e1320; --surface:#161c2b; --surface2:#1d2436;
+ --ink:#f2f4f9; --ink2:#c3c9d6; --muted:#8b93a5; --hair:#2a3245; --ring:rgba(255,255,255,.10);
+ --brand:#8aa9ee; --brand-deep:#c5d4f7; --brand-soft:#22304f; --brand-ink:#b7c8f2;
+ --accent:#e0776c;
+ --seq1:#0d366b; --seq2:#104281; --seq3:#184f95; --seq4:#256abf; --seq5:#3987e5; --seq6:#6da7ec; --seq7:#9ec5f4;
+ --good-ink:#0ca30c;
+ --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767; --otros:#6b7383;
+ --grid:#242c3e; --axis:#3a4358;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--ground);color:var(--ink);font:14px/1.55 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--brand-ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1480px;margin:auto;padding-inline:24px}
+h1,h2,h3,.display{font-family:Sora,"IBM Plex Sans",system-ui,sans-serif;letter-spacing:-.01em;text-wrap:balance}
+
+/* ---------- marca U+I ---------- */
+.topband{height:6px;background:linear-gradient(90deg,var(--brand) 0 70%,var(--accent) 70% 100%)}
+header.brand{background:var(--surface);border-bottom:1px solid var(--hair)}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:14px}
+.mark{display:flex;align-items:center;gap:14px;min-width:0}
+.ui{font-family:Sora,sans-serif;font-weight:700;font-size:34px;letter-spacing:-.04em;color:var(--brand);line-height:1}
+.ui em{font-style:normal;color:var(--accent)}
+.mark .sep{width:1px;height:34px;background:var(--hair)}
+.mark .who{display:flex;flex-direction:column;line-height:1.15}
+.mark .who b{font-family:Sora,sans-serif;font-weight:600;font-size:15px;color:var(--ink)}
+.mark .who span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.brandrow .meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--ink2)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600;
+ background:var(--brand-soft);color:var(--brand-ink);white-space:nowrap}
+.pill.sim{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+#theme{background:none;border:1px solid var(--hair);border-radius:8px;padding:6px 10px;font-size:12px}
+.titlerow{padding-block:22px 8px}
+.titlerow h1{font-size:28px;margin:0 0 6px;font-weight:600}
+.titlerow p{margin:0;max-width:78ch;color:var(--ink2);font-size:14px}
+nav.tabs{display:flex;gap:4px;overflow:auto;padding-block:6px 0}
+nav.tabs a{padding:9px 13px;font-size:13px;font-weight:600;text-decoration:none;color:var(--ink2);border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a:hover{color:var(--ink)}
+nav.tabs a[aria-current="true"]{color:var(--brand-ink);border-bottom-color:var(--brand)}
+
+/* ---------- controles ---------- */
+.controls{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--hair);box-shadow:0 4px 18px rgba(20,28,51,.06)}
+.controls .wrap{display:flex;flex-direction:column;gap:8px;padding-block:10px}
+.crow{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.cgroup{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.clabel{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.seg{display:inline-flex;background:var(--surface2);border-radius:9px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;border-radius:7px;padding:5px 11px;font-size:12.5px;font-weight:500;color:var(--ink2);white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--brand-ink);font-weight:600;box-shadow:0 1px 3px rgba(20,28,51,.14)}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.controls select{background:var(--surface2);border:1px solid transparent;border-radius:8px;padding:6px 9px;font-size:12.5px;max-width:170px}
+.controls select:hover{border-color:var(--hair)}
+#reset{background:none;border:1px solid var(--hair);border-radius:8px;padding:6px 11px;font-size:12px}
+#resumen{margin-left:auto;font-size:11.5px;color:var(--muted);text-align:right}
+
+/* ---------- secciones ---------- */
+main{padding-block:10px 40px}
+section{padding-block:30px;border-bottom:1px solid var(--hair)}
+section:last-of-type{border:0}
+.shead{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:18px;flex-wrap:wrap}
+.shead h2{font-size:22px;margin:0 0 4px;font-weight:600}
+.shead p{margin:0;font-size:13px;color:var(--ink2);max-width:80ch}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:18px 20px;min-width:0}
+.card h3{font-size:15px;margin:0 0 2px;font-weight:600}
+.card .sub{font-size:12px;color:var(--muted);margin:0 0 12px}
+.chead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px}
+.chead .tools{display:flex;gap:6px;flex:none}
+.tools button{background:none;border:1px solid var(--hair);border-radius:7px;padding:4px 9px;font-size:11px;color:var(--ink2)}
+.tools button:hover{color:var(--ink);border-color:var(--axis)}
+.tools button[aria-pressed="true"]{background:var(--brand-soft);color:var(--brand-ink);border-color:transparent}
+.chart{width:100%;height:380px}
+.chart.tall{height:460px}
+.chart.short{height:260px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g21{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+.mt{margin-top:16px}
+.note{font-size:11.5px;color:var(--muted);line-height:1.6;margin:10px 0 0}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--ink2);margin:6px 0 2px}
+.leyenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* ---------- tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.tiles.t4{grid-template-columns:repeat(4,1fr)}
+.tile{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:14px 16px 8px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile .lbl{font-size:11.5px;font-weight:600;color:var(--ink2)}
+.tile .val{font-family:Sora,sans-serif;font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
+.tile .val small{font-size:14px;font-weight:500;color:var(--muted);margin-left:2px}
+.tile .delta{font-size:11.5px;color:var(--muted)}
+.tile .delta b{font-weight:600}
+.tile .delta.up b{color:var(--good-ink)}
+.tile .delta.down b{color:var(--crit)}
+.tile .spark{height:44px;margin:4px -6px 0}
+.tile[aria-pressed="true"]{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.tile button.sel{position:absolute}
+.tilebtn{all:unset;display:block;cursor:pointer}
+.tilebtn:focus-visible .tile{outline:3px solid var(--accent)}
+
+/* ---------- tablas ---------- */
+.tw{overflow:auto;border:1px solid var(--ring);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{position:sticky;top:0;background:var(--surface);text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--hair);white-space:nowrap;z-index:1}
+td{padding:9px 12px;border-bottom:1px solid var(--grid);vertical-align:middle}
+tbody tr:hover{background:var(--surface2)}
+tr.click{cursor:pointer}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cellbar{position:relative;font-variant-numeric:tabular-nums;text-align:right}
+.cellbar i{position:absolute;left:4px;right:4px;bottom:3px;height:3px;border-radius:2px;background:var(--seq4);transform-origin:left}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:-1px}
+.chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10.5px;font-weight:600;background:var(--surface2);color:var(--ink2)}
+.sem{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.sem::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--c)}
+.smalls{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.small{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:12px 14px 6px}
+.small h4{margin:0;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.small .chart{height:150px}
+.small .tot{font-size:11.5px;color:var(--muted);margin-top:-2px}
+
+/* ---------- ficha ---------- */
+dialog{border:0;border-radius:14px;padding:0;width:min(940px,94vw);max-height:88vh;background:var(--surface);color:var(--ink);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(10,15,30,.55)}
+.dbar{position:sticky;top:0;background:var(--brand);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;font-size:11px;letter-spacing:.1em;font-weight:600;z-index:2}
+.dbar button{background:none;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:7px;padding:4px 10px;font-size:11px}
+.dbody{padding:20px 22px}
+.dbody h3{font-size:20px;margin:0 0 6px}
+.kv{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--grid);border:1px solid var(--grid);border-radius:8px;overflow:hidden;margin:14px 0}
+.kv>div{background:var(--surface);padding:9px 11px}
+.kv dt{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.kv dd{margin:2px 0 0;font-size:14px;font-variant-numeric:tabular-nums;font-family:Sora,sans-serif;font-weight:600}
+.prosa{max-width:76ch;font-size:13.5px;line-height:1.75;color:var(--ink2)}
+.prosa p{margin:0 0 13px}
+.prosa strong{color:var(--ink);font-weight:600}
+code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11.5px;font-family:ui-monospace,Menlo,monospace;overflow-wrap:anywhere}
+footer{padding-block:22px 40px;font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.skip{position:fixed;left:-999px;top:8px;background:var(--surface);padding:8px;z-index:99}
+.skip:focus{left:8px}
+.aviso{background:color-mix(in srgb,var(--warn) 16%,transparent);border-left:3px solid var(--warn);padding:8px 12px;border-radius:6px;font-size:12px;margin:0 0 10px}
+
+@media(max-width:1180px){.tiles,.tiles.t4{grid-template-columns:repeat(3,1fr)}.smalls{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.g2,.g21,.g3{grid-template-columns:1fr}.kv{grid-template-columns:1fr 1fr}.controls{position:static}}
+@media(max-width:640px){
+ .wrap{padding-inline:16px}.tiles,.tiles.t4{grid-template-columns:1fr 1fr;gap:10px}.tile{min-width:0;overflow:hidden}.tile .val{font-size:22px}
+ .ui{font-size:28px}.mark .sep,.mark .who span{display:none}.titlerow h1{font-size:22px}
+ .chart{height:320px}.smalls{grid-template-columns:1fr}#resumen{margin-left:0;text-align:left}
+ .controls select{max-width:100%;width:100%}.cgroup{width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.1/echarts.min.js"></script>
+<script defer src="datos-monitor.js"></script>
+</head>
+<body>
+<a class="skip" href="#panorama">Ir al contenido</a>
+<div class="topband"></div>
+<header class="brand"><div class="wrap">
+ <div class="brandrow">
+  <div class="mark"><span class="ui" aria-label="U más I">U<em>+</em>I</span><span class="sep"></span>
+   <span class="who"><b>UNE-CTI</b><span>Programa Uruguay Innova</span></span></div>
+  <div class="meta"><span class="pill sim">Prototipo · ejecución simulada</span><span id="corte"></span><button id="theme">Tema</button></div>
+ </div>
+ <div class="titlerow"><h1>Monitor del ecosistema de apoyos a empresas</h1>
+  <p>Visión anual y semestral de los instrumentos públicos de apoyo empresarial: cuántas empresas fueron asistidas, cuántos apoyos se otorgaron y cuánto se aprobó y ejecutó, con la posibilidad de desagregar cada cifra por institución, mecanismo, necesidad, tamaño de empresa, sector o territorio.</p></div>
+ <nav class="tabs" aria-label="Secciones"><a href="#panorama">Panorama</a><a href="#composicion">Composición</a><a href="#instrumentos">Instrumentos</a><a href="#empresas">Empresas asistidas</a><a href="#ejecucion">Ejecución</a><a href="#territorio">Territorio y sectores</a><a href="#comparar">Comparar instituciones</a><a href="#notas">Notas</a></nav>
+</div></header>
+
+<div class="controls"><div class="wrap">
+ <div class="crow">
+  <div class="cgroup"><span class="clabel">Período</span><div class="seg" id="seg-gran"><button data-v="anual" aria-pressed="true">Anual</button><button data-v="semestral" aria-pressed="false">Semestral</button></div></div>
+  <div class="cgroup"><span class="clabel">Años</span><div class="seg" id="seg-anios"></div></div>
+  <div class="cgroup"><span class="clabel">Institución</span><select id="f-agencia"><option value="">Todas</option></select></div>
+  <div class="cgroup"><span class="clabel">Mecanismo</span><select id="f-mecanismo"><option value="">Todos</option></select></div>
+  <div class="cgroup"><span class="clabel">Necesidad</span><select id="f-necesidad"><option value="">Todas</option></select></div>
+  <button id="reset">Restablecer</button>
+  <p id="resumen" role="status" aria-live="polite"></p>
+ </div>
+ <div class="crow">
+  <div class="cgroup"><span class="clabel">Indicador</span><div class="seg" id="seg-metric"></div></div>
+  <div class="cgroup"><span class="clabel">Ver por</span><div class="seg" id="seg-dim"></div></div>
+  <div class="cgroup"><span class="clabel">Vista</span><div class="seg" id="seg-vista"><button data-v="apilado" aria-pressed="true">Apilado</button><button data-v="agrupado" aria-pressed="false">Agrupado</button><button data-v="lineas" aria-pressed="false">Líneas</button><button data-v="porcentaje" aria-pressed="false">% del total</button></div></div>
+ </div>
+</div></div>
+
+<main class="wrap">
+
+<section id="panorama">
+ <div class="shead"><div><h2>Panorama</h2><p>Cifras del período seleccionado con la variación respecto del período anterior. Cada tarjeta puede elegirse como indicador de los gráficos dinámicos.</p></div></div>
+ <div class="tiles" id="tiles"></div>
+ <div class="card mt">
+  <div class="chead"><div><h3 id="evol-title">Evolución</h3><p class="sub" id="evol-sub"></p></div>
+   <div class="tools"><button data-tabla="evol">Ver tabla</button><button data-csv="evol">CSV</button></div></div>
+  <div id="evol-aviso" hidden class="aviso"></div>
+  <div id="ch-evol" class="chart"></div>
+  <p class="note" id="evol-note"></p>
+ </div>
+</section>
+
+<section id="composicion">
+ <div class="shead"><div><h2>Composición</h2><p>Dónde se concentra el indicador seleccionado. El mapa de área se recorre por niveles: institución, instrumento y línea. Un clic entra en el nivel; el rastro superior vuelve.</p></div></div>
+ <div class="g21">
+  <div class="card"><div class="chead"><div><h3 id="tree-title">Institución, instrumento y línea</h3><p class="sub" id="tree-sub"></p></div></div><div id="ch-tree" class="chart tall"></div></div>
+  <div class="card"><div class="chead"><div><h3>Instrumentos con mayor volumen</h3><p class="sub" id="rank-sub"></p></div><div class="tools"><button data-csv="rank">CSV</button></div></div><div id="ch-rank" class="chart tall"></div></div>
+ </div>
+</section>
+
+<section id="instrumentos">
+ <div class="shead"><div><h2>Instrumentos</h2><p>Serie del indicador por instrumento en cada período, con el peso relativo de cada celda. Seleccionar una fila abre el detalle por línea.</p></div>
+  <div class="tools"><button data-csv="instr">CSV</button></div></div>
+ <div class="tw" style="max-height:600px"><table id="t-instr"><thead></thead><tbody></tbody></table></div>
+ <p class="note" id="instr-note"></p>
+</section>
+
+<section id="empresas">
+ <div class="shead"><div><h2>Empresas asistidas</h2><p>Quiénes reciben apoyo y cómo se renueva la base de beneficiarias. La distinción entre empresas nuevas y recurrentes y la circulación entre instituciones solo son observables con identificación única por RUT.</p></div></div>
+ <div class="g2">
+  <div class="card"><div class="chead"><div><h3>Nuevas y recurrentes</h3><p class="sub">Empresas asistidas por período según tengan o no un apoyo anterior registrado en cualquier institución. El primer período de la serie no tiene historia previa y cuenta a todas como nuevas.</p></div><div class="tools"><button data-csv="nuevas">CSV</button></div></div><div id="ch-nuevas" class="chart"></div></div>
+  <div class="card"><div class="chead"><div><h3>Empresas atendidas por más de una institución</h3><p class="sub">Porcentaje de las asistidas en el período con apoyos otorgados por dos o más instituciones en ese mismo período.</p></div></div><div id="ch-multi" class="chart"></div></div>
+ </div>
+ <div class="g2 mt">
+  <div class="card"><div class="chead"><div><h3>Apoyos por empresa</h3><p class="sub">Distribución de las empresas asistidas según la cantidad de apoyos otorgados en el período.</p></div></div><div id="ch-intensidad" class="chart short"></div></div>
+  <div class="card"><div class="chead"><div><h3>Empresas compartidas entre instituciones</h3><p class="sub">Empresas con apoyo de ambas instituciones en el período. La diagonal es el total de cada una.</p></div></div><div id="ch-cooc" class="chart short" style="height:330px"></div></div>
+ </div>
+</section>
+
+<section id="ejecucion">
+ <div class="shead"><div><h2>Ejecución presupuestal</h2><p>Recorrido del presupuesto en cada período: asignado en las bases, aprobado en resoluciones y desembolsado o rendido. Las tasas se calculan solo sobre convocatorias con presupuesto informado.</p></div></div>
+ <div class="tiles t4" id="tiles-eje"></div>
+ <div class="g2 mt">
+  <div class="card"><div class="chead"><div><h3>Asignado, aprobado y ejecutado</h3><p class="sub">Millones de pesos por período.</p></div><div class="tools"><button data-csv="eje">CSV</button></div></div><div id="ch-eje" class="chart"></div></div>
+  <div class="card"><div class="chead"><div><h3>Tasa de ejecución por institución</h3><p class="sub">Ejecutado sobre asignado en cada período. Un período reciente muestra tasas bajas por construcción.</p></div></div><div id="ch-heat-eje" class="chart"></div></div>
+ </div>
+ <div class="card mt"><div class="chead"><div><h3>Ticket por mecanismo</h3><p class="sub">Mediana del monto aprobado por apoyo otorgado, en miles de pesos, por período.</p></div></div><div id="ch-ticket" class="chart short"></div></div>
+</section>
+
+<section id="territorio">
+ <div class="shead"><div><h2>Territorio y sectores</h2><p>Alcance territorial y sectorial de las empresas asistidas. La comparación entre períodos permite ver si el alcance se amplía o se concentra.</p></div></div>
+ <div class="g2">
+  <div class="card"><div class="chead"><div><h3>Empresas asistidas por departamento</h3><p class="sub">Ordenado por el último período seleccionado.</p></div><div class="tools"><button data-csv="depto">CSV</button></div></div><div id="ch-depto" class="chart tall"></div></div>
+  <div class="card"><div class="chead"><div><h3>Sector e institución</h3><p class="sub">Empresas asistidas en el período por sector de actividad e institución.</p></div></div><div id="ch-heat-sector" class="chart tall"></div></div>
+ </div>
+</section>
+
+<section id="comparar">
+ <div class="shead"><div><h2>Comparar instituciones</h2><p>El indicador seleccionado, desagregado en un panel por institución sobre una escala común. Es la vista desagrupada de la evolución general.</p></div></div>
+ <div class="smalls" id="smalls"></div>
+</section>
+
+<section id="notas">
+ <div class="shead"><div><h2>Notas metodológicas</h2></div></div>
+ <div class="prosa" id="prosa"></div>
+</section>
+</main>
+
+<footer class="wrap"><span><b>UNE-CTI · Programa Uruguay Innova</b> · Monitor del ecosistema de apoyos a empresas</span><span id="foot"></span></footer>
+<dialog id="ficha"><div class="dbar"><span id="ficha-tipo">FICHA</span><button id="cerrar">Cerrar</button></div><div class="dbody" id="ficha-body"></div></dialog>
+
+<script>
+'use strict';
+document.addEventListener('DOMContentLoaded', () => {
+const M = window.MONITOR, $ = id => document.getElementById(id);
+const EPOCA = new Date(M.epoca + 'T00:00:00');
+const HOY = new Date(M.meta.fecha_corte + 'T00:00:00');
+const EST = M.estados_solicitud;
+const OTORG = new Set(['APROBADA','EN_EJECUCION','FINALIZADA'].map(e => EST.indexOf(e)));
+const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf = new Intl.NumberFormat('es-UY');
+const int = x => nf.format(Math.round(x || 0));
+const dec = (x, d = 1) => nf.format(+(x || 0).toFixed(d));
+const uniq = xs => [...new Set(xs)];
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+/* ---------- índices ---------- */
+const AGS = M.agencias.map(a => a.nombre);
+const LIN = Object.fromEntries(M.lineas.map(l => [l.id, l]));
+const INS = Object.fromEntries(M.instrumentos.map(i => [i.id, i]));
+const EMP = M.empresas;
+const dateOf = d => new Date(EPOCA.getTime() + d * 864e5);
+M.convocatorias.forEach((c, i) => {
+  const l = LIN[c.linea_id];
+  Object.assign(c, {i, agencia: l.agencia, mecanismo: l.mecanismo, necesidad: l.necesidad, etapa: l.etapa,
+    instrumento_id: l.instrumento_id, linea: l.nombre, instrumento: l.instrumento});
+  const d = new Date(c.apertura + 'T00:00:00'); c.y = d.getFullYear(); c.s = d.getMonth() < 6 ? 1 : 2;
+});
+const SOL = M.solicitudes.map(s => {
+  const c = M.convocatorias[s[0]], d = dateOf(s[8] > 0 ? s[8] : s[2]);
+  return {c, emp: s[1], f: s[2], est: s[3], sol: s[4], apr: s[5], eje: s[6], cpt: s[7], res: s[8],
+          otorg: OTORG.has(s[3]), agencia: c.agencia, y: d.getFullYear(), s: d.getMonth() < 6 ? 1 : 2, t: s[8] > 0 ? s[8] : s[2]};
+});
+const primer = new Map();
+SOL.filter(s => s.otorg).forEach(s => { const p = primer.get(s.emp); if (p === undefined || s.t < p) primer.set(s.emp, s.t); });
+const ANIOS = uniq(SOL.map(s => s.y).concat(M.convocatorias.map(c => c.y))).filter(y => y <= HOY.getFullYear()).sort();
+const HOY_S = HOY.getMonth() < 6 ? 1 : 2;
+
+/* ---------- estado ---------- */
+const S = {gran: 'anual', anios: new Set(ANIOS), agencia: '', mecanismo: '', necesidad: '', metric: 'empresas', dim: 'ninguna', vista: 'apilado'};
+
+const METRICS = {
+  empresas:     {l: 'Empresas asistidas', nivel: 'sol', otorg: true, kind: 'distinct', key: s => s.emp, fmt: int, u: ''},
+  apoyos:       {l: 'Apoyos otorgados', nivel: 'sol', otorg: true, kind: 'count', fmt: int, u: ''},
+  aprobado:     {l: 'Monto aprobado', nivel: 'sol', otorg: true, kind: 'sum', val: s => s.apr, fmt: x => dec(x / 1e6) , u: 'M', money: true},
+  ejecutado:    {l: 'Monto ejecutado', nivel: 'sol', otorg: true, kind: 'sum', val: s => s.eje, fmt: x => dec(x / 1e6), u: 'M', money: true},
+  asignado:     {l: 'Presupuesto asignado', nivel: 'conv', kind: 'sum', val: c => c.asignado, fmt: x => dec(x / 1e6), u: 'M', money: true},
+  solicitudes:  {l: 'Solicitudes', nivel: 'sol', otorg: false, kind: 'count', fmt: int, u: ''},
+  instrumentos: {l: 'Instrumentos activos', nivel: 'sol', otorg: true, kind: 'distinct', key: s => s.c.instrumento_id, fmt: int, u: ''},
+};
+const DIMS = {
+  ninguna:     {l: 'Sin desagregar', nivel: 'any'},
+  institucion: {l: 'Institución', nivel: 'any', sol: s => s.agencia, conv: c => c.agencia, orden: AGS},
+  mecanismo:   {l: 'Mecanismo', nivel: 'any', sol: s => s.c.mecanismo, conv: c => c.mecanismo, orden: M.mecanismos},
+  necesidad:   {l: 'Necesidad', nivel: 'any', sol: s => s.c.necesidad, conv: c => c.necesidad, orden: M.necesidades},
+  etapa:       {l: 'Etapa', nivel: 'any', sol: s => s.c.etapa, conv: c => c.etapa, orden: M.etapas},
+  instrumento: {l: 'Instrumento', nivel: 'any', sol: s => s.c.instrumento, conv: c => c.instrumento, orden: M.instrumentos.map(i => i.nombre)},
+  tamano:      {l: 'Tamaño', nivel: 'sol', sol: s => EMP[s.emp].tamano, orden: M.tamanos},
+  sector:      {l: 'Sector', nivel: 'sol', sol: s => EMP[s.emp].sector, orden: M.sectores},
+  depto:       {l: 'Departamento', nivel: 'sol', sol: s => EMP[s.emp].depto, orden: M.departamentos},
+};
+
+/* ---------- períodos ---------- */
+function periodos() {
+  const ys = ANIOS.filter(y => S.anios.has(y));
+  if (S.gran === 'anual') return ys.map(y => ({k: String(y), l: String(y) + (y === HOY.getFullYear() ? '*' : ''), y, parcial: y === HOY.getFullYear()}));
+  return ys.flatMap(y => [1, 2].filter(s => y < HOY.getFullYear() || s <= HOY_S)
+    .map(s => ({k: `${y}-${s}`, l: `${y} S${s}` + (y === HOY.getFullYear() && s === HOY_S ? '*' : ''), y, s, parcial: y === HOY.getFullYear() && s === HOY_S})));
+}
+const pk = r => S.gran === 'anual' ? String(r.y) : `${r.y}-${r.s}`;
+const okDim = c => (!S.agencia || c.agencia === S.agencia) && (!S.mecanismo || c.mecanismo === S.mecanismo) && (!S.necesidad || c.necesidad === S.necesidad);
+const solSel = () => SOL.filter(s => okDim(s.c) && S.anios.has(s.y));
+const convSel = () => M.convocatorias.filter(c => okDim(c) && S.anios.has(c.y));
+
+/* ---------- agregación genérica ---------- */
+function agg(metricKey, dimKey, opts = {}) {
+  const m = METRICS[metricKey], d = DIMS[dimKey];
+  const P = periodos();
+  const rows = m.nivel === 'sol' ? solSel().filter(s => !m.otorg || s.otorg) : convSel();
+  const fn = dimKey === 'ninguna' ? (() => 'Total') : (m.nivel === 'sol' ? d.sol : d.conv);
+  const acc = new Map();      // cat -> Map(period -> Set|number)
+  rows.forEach(r => {
+    const cat = fn(r), per = pk(r);
+    let a = acc.get(cat); if (!a) { a = new Map(); acc.set(cat, a); }
+    if (m.kind === 'distinct') { let s = a.get(per); if (!s) { s = new Set(); a.set(per, s); } s.add(m.key(r)); }
+    else a.set(per, (a.get(per) || 0) + (m.kind === 'count' ? 1 : m.val(r)));
+  });
+  const val = (a, per) => { const v = a.get(per); return v === undefined ? 0 : (v instanceof Set ? v.size : v); };
+  let cats = [...acc.keys()].map(cat => ({cat, vals: P.map(p => val(acc.get(cat), p.k))}));
+  cats.forEach(c => c.total = c.vals.reduce((x, y) => x + y, 0));
+  cats.sort((a, b) => b.total - a.total);
+  const max = opts.max || 8;
+  if (dimKey !== 'ninguna' && dimKey !== 'institucion' && cats.length > max) {
+    const top = cats.slice(0, max - 1), rest = cats.slice(max - 1);
+    const otros = {cat: 'Otros', vals: P.map((_, i) => rest.reduce((n, c) => n + c.vals[i], 0)), otros: true};
+    otros.total = otros.vals.reduce((x, y) => x + y, 0);
+    cats = [...top, otros];
+  }
+  if (dimKey === 'institucion') cats.sort((a, b) => AGS.indexOf(a.cat) - AGS.indexOf(b.cat));
+  return {P, cats, m, d};
+}
+
+/* ---------- colores ---------- */
+const SLOTS = ['--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
+const colorMap = {};     // dim -> cat -> slot var
+function colorFor(dimKey, cat) {
+  if (cat === 'Otros') return css('--otros');
+  if (cat === 'Total') return css('--brand');
+  if (dimKey === 'institucion') return css(SLOTS[AGS.indexOf(cat)]);
+  if (!colorMap[dimKey]) {
+    // orden global fijo por volumen total, para que el color siga a la entidad y no al filtro
+    const saved = S.agencia, sm = S.mecanismo, sn = S.necesidad, sa = new Set(S.anios);
+    S.agencia = S.mecanismo = S.necesidad = ''; S.anios = new Set(ANIOS);
+    const g = agg(dimKey === 'mecanismo' ? 'aprobado' : 'apoyos', dimKey, {max: 999});   // el mecanismo se ordena por monto, el resto por apoyos
+    S.agencia = saved; S.mecanismo = sm; S.necesidad = sn; S.anios = sa;
+    colorMap[dimKey] = Object.fromEntries(g.cats.map((c, i) => [c.cat, i]));
+    colorMap[dimKey].__n = g.cats.length;
+  }
+  const rank = colorMap[dimKey][cat];
+  if (rank === undefined) return css('--otros');
+  const lim = colorMap[dimKey].__n <= 8 ? 8 : 7;      // con más de 8 categorías, la octava ranura queda para Otros
+  return rank < lim ? css(SLOTS[rank]) : css('--otros');
+}
+
+/* ---------- echarts base ---------- */
+const charts = {};
+function chart(id) {
+  const el = $(id);
+  if (charts[id] && charts[id].getDom() !== el) { charts[id].dispose(); delete charts[id]; }
+  if (!charts[id]) charts[id] = echarts.init(el, null, {renderer: 'canvas'});
+  return charts[id];
+}
+const TXT = () => ({color: css('--ink2'), fontFamily: '"IBM Plex Sans", system-ui, sans-serif', fontSize: 11.5});
+function base() {
+  return {
+    textStyle: TXT(), animationDuration: 350,
+    tooltip: {trigger: 'axis', backgroundColor: css('--ink'), borderWidth: 0, textStyle: {color: css('--ground'), fontSize: 12},
+      axisPointer: {type: 'shadow', shadowStyle: {color: 'rgba(120,130,160,.10)'}}},
+    grid: {left: 8, right: 14, top: 26, bottom: 44, containLabel: true},
+    xAxis: {type: 'category', axisLine: {lineStyle: {color: css('--axis')}}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 11.5}},
+    yAxis: {type: 'value', splitLine: {lineStyle: {color: css('--grid')}}, axisLabel: {color: css('--muted'), fontSize: 11}},
+    legend: {bottom: 0, type: 'scroll', icon: 'roundRect', itemWidth: 12, itemHeight: 10, textStyle: {color: css('--ink2'), fontSize: 11.5}, pageTextStyle: {color: css('--ink2')}},
+  };
+}
+const fmtVal = (m, v) => m.money ? '$ ' + dec(v / 1e6) + ' M' : int(v);
+const fmtMoneyAxis = v => Math.abs(v) >= 1e6 ? dec(v / 1e6, v % 1e6 ? 1 : 0) + ' M' : (Math.abs(v) >= 1000 ? dec(v / 1000, 0) + ' k' : int(v));
+const fmtAxis = m => v => m.money ? fmtMoneyAxis(v) : (v >= 10000 ? dec(v / 1000, 0) + ' k' : int(v));
+
+/* ---------- serie dinámica ---------- */
+function evolOption(A, vista, opts = {}) {
+  const {P, cats, m} = A, o = base();
+  const pct = vista === 'porcentaje';
+  const tot = P.map((_, i) => cats.reduce((n, c) => n + c.vals[i], 0));
+  const stacked = vista === 'apilado' || pct;
+  const single = cats.length === 1;
+  o.xAxis.data = P.map(p => p.l);
+  o.yAxis.axisLabel.formatter = pct ? (v => v + '%') : fmtAxis(m);
+  if (pct) o.yAxis.max = 100;
+  o.series = cats.map((c, ci) => ({
+    name: c.cat, type: vista === 'lineas' ? 'line' : 'bar',
+    stack: stacked ? 't' : undefined,
+    data: c.vals.map((v, i) => pct ? (tot[i] ? +(v / tot[i] * 100).toFixed(1) : 0) : v),
+    itemStyle: {color: colorFor(A.dimKey, c.cat), borderRadius: vista === 'lineas' ? 0 : (stacked && ci < cats.length - 1 ? 0 : [4, 4, 0, 0])},
+    lineStyle: {width: 2}, symbol: 'circle', symbolSize: 8, smooth: false, emphasis: {focus: 'series'},
+    barMaxWidth: single ? 64 : 40, barGap: '12%', barCategoryGap: '32%',
+    label: single ? {show: true, position: 'top', color: css('--ink2'), fontSize: 11.5, formatter: p => fmtVal(m, p.value)} : undefined,
+    markArea: opts.markParcial !== false && ci === 0 ? {silent: true, itemStyle: {color: 'rgba(180,73,63,.06)'},
+      data: P.map((p, i) => p.parcial ? [{xAxis: i}, {xAxis: i}] : null).filter(Boolean)} : undefined,
+  }));
+  o.legend.show = !single;
+  o.tooltip.formatter = ps => {
+    const i = ps[0].dataIndex;
+    const head = `<b>${P[i].l}</b>${P[i].parcial ? ' <span style="opacity:.7">(parcial)</span>' : ''}`;
+    const lines = ps.filter(p => p.value).sort((a, b) => b.value - a.value).map(p =>
+      `<div style="display:flex;justify-content:space-between;gap:14px"><span>${p.marker} ${esc(p.seriesName)}</span><b>${pct ? p.value + '%' : fmtVal(m, p.value)}</b></div>`).join('');
+    const total = !single && !pct ? `<div style="border-top:1px solid rgba(255,255,255,.25);margin-top:4px;padding-top:4px;display:flex;justify-content:space-between"><span>Total</span><b>${fmtVal(m, tot[i])}</b></div>` : '';
+    return head + lines + total;
+  };
+  return o;
+}
+
+/* ---------- tiles ---------- */
+function deltaTxt(cur, prev, m) {
+  if (!prev) return {t: 'sin período anterior', cls: ''};
+  const r = (cur - prev) / prev * 100;
+  return {t: `<b>${r >= 0 ? '+' : ''}${dec(r, 1)}%</b> vs. período anterior`, cls: r >= 0 ? 'up' : 'down'};
+}
+function renderTiles() {
+  const P = periodos(); const last = P.length - 1;
+  $('tiles').innerHTML = Object.entries(METRICS).filter(([k]) => k !== 'solicitudes' || true).slice(0, 6).map(([k, m]) => {
+    const A = agg(k, 'ninguna'); const v = A.cats[0]?.vals || P.map(() => 0);
+    const d = deltaTxt(v[last], v[last - 1], m);
+    return `<button class="tilebtn" data-metric="${k}" aria-pressed="${S.metric === k}"><div class="tile" aria-pressed="${S.metric === k}">
+      <span class="lbl">${m.l}</span><span class="val display">${m.money ? '$ ' : ''}${m.fmt(v[last])}${m.u ? `<small>${m.u}</small>` : ''}</span>
+      <span class="delta ${d.cls}">${P[last].l.replace('*', '')}${P[last].parcial ? ' (parcial)' : ''} · ${d.t}</span>
+      <div class="spark" id="sp-${k}"></div></div></button>`;
+  }).join('');
+  Object.keys(METRICS).slice(0, 6).forEach(k => {
+    const saved = S.gran; S.gran = 'semestral';
+    const A = agg(k, 'ninguna'); S.gran = saved;
+    const v = A.cats[0]?.vals || [];
+    chart('sp-' + k).setOption({
+      animation: false, grid: {left: 4, right: 4, top: 4, bottom: 4}, tooltip: {show: false},
+      xAxis: {type: 'category', show: false, data: A.P.map(p => p.l)}, yAxis: {type: 'value', show: false, max: Math.max(...v, 1)},
+      series: [{type: 'bar', data: v, barCategoryGap: '30%', itemStyle: {color: css('--seq3'), borderRadius: [2, 2, 0, 0]},
+        markPoint: undefined}]
+    }, true);
+  });
+}
+
+/* ---------- evolución ---------- */
+let lastAgg = null;
+function renderEvol() {
+  const m = METRICS[S.metric], d = DIMS[S.dim];
+  let dim = S.dim;
+  const aviso = $('evol-aviso');
+  if (m.nivel === 'conv' && d.nivel === 'sol') {
+    dim = 'ninguna';
+    aviso.hidden = false;
+    aviso.textContent = `${m.l} se registra por convocatoria y no puede desagregarse por ${d.l.toLowerCase()}, que es un atributo de la empresa solicitante. Se muestra el total.`;
+  } else aviso.hidden = true;
+  const A = agg(S.metric, dim); A.dimKey = dim; lastAgg = A;
+  $('evol-title').textContent = `${m.l}${dim !== 'ninguna' ? ' por ' + DIMS[dim].l.toLowerCase() : ''}`;
+  $('evol-sub').textContent = `${S.gran === 'anual' ? 'Serie anual' : 'Serie semestral'}${m.money ? ', millones de pesos uruguayos' : ''}. ${S.vista === 'porcentaje' ? 'Participación de cada categoría en el total del período.' : S.vista === 'agrupado' ? 'Barras lado a lado para comparar categorías dentro del período.' : S.vista === 'lineas' ? 'Una línea por categoría para leer la tendencia.' : 'Barras apiladas: la altura total es el valor del período.'}`;
+  chart('ch-evol').setOption(evolOption(A, S.vista), true);
+  const n = A.cats.length, otros = A.cats.some(c => c.otros);
+  $('evol-note').textContent = (A.P.some(p => p.parcial) ? 'El asterisco marca un período parcial, cerrado en la fecha de corte. ' : '') +
+    (otros ? `Se muestran las ${n - 1} categorías de mayor volumen y el resto se agrupa en Otros para mantener la legibilidad. ` : '') +
+    (m.kind === 'distinct' ? 'Las empresas o instrumentos se cuentan una sola vez por período y categoría, por lo que la suma de categorías puede superar el total sin desagregar.' : '');
+  document.querySelectorAll('#seg-dim button').forEach(b => b.disabled = m.nivel === 'conv' && DIMS[b.dataset.v].nivel === 'sol');
+}
+
+/* ---------- composición ---------- */
+function renderTree() {
+  const m = METRICS[S.metric], P = periodos();
+  const rows = m.nivel === 'sol' ? solSel().filter(s => !m.otorg || s.otorg) : convSel();
+  const tree = {};
+  const add = (a, i, l, r) => {
+    const A = tree[a] = tree[a] || {n: a, kids: {}, set: new Set(), v: 0};
+    const I = A.kids[i] = A.kids[i] || {n: INS[i].nombre, kids: {}, set: new Set(), v: 0};
+    const L = I.kids[l] = I.kids[l] || {n: LIN[l].nombre, set: new Set(), v: 0};
+    [A, I, L].forEach(x => { if (m.kind === 'distinct') x.set.add(m.key(r)); else x.v += m.kind === 'count' ? 1 : m.val(r); });
+  };
+  rows.forEach(r => m.nivel === 'sol' ? add(r.agencia, r.c.instrumento_id, r.c.linea_id, r) : add(r.agencia, r.instrumento_id, r.linea_id, r));
+  const val = x => m.kind === 'distinct' ? x.set.size : x.v;
+  const data = Object.entries(tree).map(([a, A]) => ({name: a, value: val(A), itemStyle: {color: colorFor('institucion', a)},
+    children: Object.values(A.kids).map(I => ({name: I.n, value: val(I), children: Object.values(I.kids).map(L => ({name: L.n, value: val(L)}))}))}));
+  $('tree-sub').textContent = `${m.l}, ${P[0].l.replace('*','')}${P.length > 1 ? ' a ' + P.at(-1).l.replace('*','') : ''}. Área proporcional al valor.`;
+  chart('ch-tree').setOption({
+    textStyle: TXT(),
+    tooltip: {backgroundColor: css('--ink'), borderWidth: 0, textStyle: {color: css('--ground'), fontSize: 12},
+      formatter: p => `<b>${esc(p.name)}</b><br>${fmtVal(m, p.value)}`},
+    series: [{name: 'Ecosistema', type: 'treemap', leafDepth: 1, roam: false, width: '100%', height: '88%', top: 30,
+      breadcrumb: {show: true, top: 0, left: 0, itemStyle: {color: css('--surface2'), textStyle: {color: css('--ink2'), fontSize: 11.5}}, emphasis: {itemStyle: {color: css('--brand-soft')}}},
+      label: {show: true, color: '#fff', fontSize: 12, fontFamily: '"IBM Plex Sans", sans-serif', formatter: p => `${p.name}\n${fmtVal(m, p.value)}`, overflow: 'break'},
+      upperLabel: {show: true, height: 22, color: '#fff', fontSize: 11.5},
+      itemStyle: {borderColor: css('--surface'), borderWidth: 2, gapWidth: 2},
+      levels: [
+        {itemStyle: {borderWidth: 0, gapWidth: 3}},
+        {colorSaturation: [0.55, 0.85], itemStyle: {gapWidth: 2, borderColorSaturation: 0.7}},
+        {colorSaturation: [0.4, 0.75], itemStyle: {gapWidth: 1, borderColorSaturation: 0.6}},
+      ],
+      data}]
+  }, true);
+
+  // ranking
+  const byIns = {};
+  rows.forEach(r => { const id = m.nivel === 'sol' ? r.c.instrumento_id : r.instrumento_id;
+    const x = byIns[id] = byIns[id] || {id, set: new Set(), v: 0, ag: r.agencia};
+    if (m.kind === 'distinct') x.set.add(m.key(r)); else x.v += m.kind === 'count' ? 1 : m.val(r); });
+  const rank = Object.values(byIns).map(x => ({...x, v: val(x)})).sort((a, b) => b.v - a.v).slice(0, 15).reverse();
+  $('rank-sub').textContent = `Los quince instrumentos con mayor ${m.l.toLowerCase()} en el período. El color indica la institución.`;
+  const o = base(); o.grid = {left: 8, right: 60, top: 6, bottom: 30, containLabel: true};
+  o.xAxis = {type: 'value', axisLabel: {color: css('--muted'), fontSize: 11, formatter: fmtAxis(m)}, splitLine: {lineStyle: {color: css('--grid')}}};
+  o.yAxis = {type: 'category', data: rank.map(r => INS[r.id].nombre), axisLine: {show: false}, axisTick: {show: false},
+    axisLabel: {color: css('--ink2'), fontSize: 11.5, width: 190, overflow: 'truncate'}};
+  o.legend = {bottom: 0, icon: 'circle', itemWidth: 9, itemHeight: 9, textStyle: {color: css('--ink2'), fontSize: 11}, data: uniq(rank.map(r => r.ag))};
+  o.series = uniq(rank.map(r => r.ag)).map(a => ({name: a, type: 'bar', stack: 'r', barCategoryGap: '30%',
+    itemStyle: {color: colorFor('institucion', a), borderRadius: [0, 4, 4, 0]},
+    data: rank.map(r => r.ag === a ? r.v : 0), label: {show: true, position: 'right', color: css('--ink2'), fontSize: 11, formatter: p => p.value ? fmtVal(m, p.value) : ''}}));
+  o.tooltip.formatter = ps => { const p = ps.find(x => x.value); return p ? `<b>${esc(p.name)}</b><br>${p.marker} ${p.seriesName}: ${fmtVal(m, p.value)}` : ''; };
+  chart('ch-rank').setOption(o, true);
+  window.__rank = rank.map(r => ({instrumento: INS[r.id].nombre, institucion: r.ag, valor: r.v}));
+}
+
+/* ---------- tabla de instrumentos ---------- */
+let instrRows = [];
+function renderInstr() {
+  const A = agg(S.metric, 'instrumento', {max: 9999});
+  const m = A.m, P = A.P;
+  const insByName = Object.fromEntries(M.instrumentos.map(i => [i.nombre, i]));
+  const max = Math.max(1, ...A.cats.flatMap(c => c.vals));
+  $('t-instr').querySelector('thead').innerHTML = `<tr><th>Instrumento</th><th>Institución</th>${P.map(p => `<th class="num">${p.l}</th>`).join('')}<th class="num">Total</th><th>Tendencia</th></tr>`;
+  instrRows = A.cats.map(c => ({...c, ins: insByName[c.cat]}));
+  $('t-instr').querySelector('tbody').innerHTML = instrRows.map((r, i) => `<tr class="click" data-i="${i}">
+    <td><b>${esc(r.cat)}</b></td><td><i class="dot" style="--c:${colorFor('institucion', r.ins.agencia)}"></i>${esc(r.ins.agencia)}</td>
+    ${r.vals.map(v => `<td class="cellbar">${v ? (m.money ? dec(v / 1e6) : int(v)) : '<span style="color:var(--muted)">·</span>'}<i style="transform:scaleX(${(v / max).toFixed(3)})"></i></td>`).join('')}
+    <td class="num"><b>${m.money ? dec(r.total / 1e6) : int(r.total)}</b></td><td><div id="tr-${i}" style="width:110px;height:26px"></div></td></tr>`).join('');
+  instrRows.forEach((r, i) => chart('tr-' + i).setOption({animation: false, grid: {left: 2, right: 2, top: 3, bottom: 3},
+    xAxis: {type: 'category', show: false, data: P.map(p => p.l)}, yAxis: {type: 'value', show: false, max},
+    series: [{type: 'line', data: r.vals, showSymbol: false, lineStyle: {width: 1.5, color: css('--seq5')}, areaStyle: {color: css('--seq1'), opacity: .8}}]}, true));
+  $('instr-note').textContent = `${m.l}${m.money ? ' en millones de pesos' : ''}. La barra bajo cada cifra es proporcional al valor máximo de la tabla. ${m.kind === 'distinct' ? 'Cada empresa o instrumento se cuenta una vez por período.' : ''}`;
+}
+
+/* ---------- empresas ---------- */
+function renderEmpresas() {
+  const P = periodos(); const ot = solSel().filter(s => s.otorg);
+  const nuevas = P.map(() => new Set()), rec = P.map(() => new Set()), todas = P.map(() => new Set());
+  const porEmpAg = P.map(() => new Map()), nApoyos = P.map(() => new Map());
+  P.forEach((p, i) => {
+    const ini = S.gran === 'anual' ? new Date(p.y, 0, 1) : new Date(p.y, p.s === 1 ? 0 : 6, 1);
+    const iniD = Math.round((ini - EPOCA) / 864e5);
+    ot.filter(s => pk(s) === p.k).forEach(s => {
+      todas[i].add(s.emp);
+      (primer.get(s.emp) >= iniD ? nuevas[i] : rec[i]).add(s.emp);
+      let ag = porEmpAg[i].get(s.emp); if (!ag) { ag = new Set(); porEmpAg[i].set(s.emp, ag); } ag.add(s.agencia);
+      nApoyos[i].set(s.emp, (nApoyos[i].get(s.emp) || 0) + 1);
+    });
+  });
+  const o = base(); o.xAxis.data = P.map(p => p.l); o.yAxis.axisLabel.formatter = fmtAxis(METRICS.empresas);
+  o.series = [
+    {name: 'Nuevas en el ecosistema', type: 'bar', stack: 'e', data: nuevas.map(s => s.size), itemStyle: {color: css('--s3')}, barMaxWidth: 56},
+    {name: 'Recurrentes', type: 'bar', stack: 'e', data: rec.map(s => s.size), itemStyle: {color: css('--seq5'), borderRadius: [4, 4, 0, 0]}, barMaxWidth: 56,
+     label: {show: true, position: 'top', color: css('--ink2'), fontSize: 11, formatter: p => int(todas[p.dataIndex].size)}},
+  ];
+  o.tooltip.formatter = ps => `<b>${P[ps[0].dataIndex].l}</b>` + ps.map(p => `<div>${p.marker} ${p.seriesName}: <b>${int(p.value)}</b> (${Math.round(p.value / (todas[p.dataIndex].size || 1) * 100)}%)</div>`).join('');
+  chart('ch-nuevas').setOption(o, true);
+  window.__nuevas = P.map((p, i) => ({periodo: p.l, nuevas: nuevas[i].size, recurrentes: rec[i].size}));
+
+  const multi = P.map((_, i) => { const n = [...porEmpAg[i].values()].filter(s => s.size > 1).length; return todas[i].size ? +(n / todas[i].size * 100).toFixed(1) : 0; });
+  const o2 = base(); o2.xAxis.data = P.map(p => p.l); o2.yAxis.axisLabel.formatter = v => v + '%'; o2.yAxis.max = Math.max(10, Math.ceil(Math.max(...multi) / 5) * 5 + 5);
+  o2.series = [{name: 'Multi institución', type: 'line', data: multi, symbol: 'circle', symbolSize: 9, lineStyle: {width: 2.5, color: css('--s7')}, itemStyle: {color: css('--s7')},
+    areaStyle: {color: css('--s7'), opacity: .08}, label: {show: true, position: 'top', color: css('--ink2'), fontSize: 11.5, formatter: p => p.value + '%'}}];
+  o2.legend.show = false;
+  o2.tooltip.formatter = ps => `<b>${P[ps[0].dataIndex].l}</b><br>${ps[0].value}% de ${int(todas[ps[0].dataIndex].size)} empresas`;
+  chart('ch-multi').setOption(o2, true);
+
+  const last = P.length - 1; const dist = [0, 0, 0, 0];
+  nApoyos[last].forEach(n => dist[Math.min(n, 4) - 1]++);
+  const o3 = base(); o3.grid.bottom = 10; o3.legend.show = false;
+  o3.xAxis.data = ['1 apoyo', '2 apoyos', '3 apoyos', '4 o más']; o3.yAxis.axisLabel.formatter = fmtAxis(METRICS.empresas);
+  o3.series = [{type: 'bar', data: dist, barMaxWidth: 70, itemStyle: {color: css('--seq5'), borderRadius: [4, 4, 0, 0]},
+    label: {show: true, position: 'top', color: css('--ink2'), fontSize: 11.5, formatter: p => `${int(p.value)} · ${Math.round(p.value / (todas[last].size || 1) * 100)}%`}}];
+  o3.tooltip.formatter = ps => `<b>${ps[0].name}</b><br>${int(ps[0].value)} empresas en ${P[last].l}`;
+  chart('ch-intensidad').setOption(o3, true);
+
+  // coocurrencia (último período)
+  const setAg = AGS.map(a => new Set([...porEmpAg[last].entries()].filter(([, s]) => s.has(a)).map(([e]) => e)));
+  const cells = []; let mx = 0;
+  AGS.forEach((a, i) => AGS.forEach((b, j) => { let n = 0; if (i === j) n = setAg[i].size; else setAg[i].forEach(e => { if (setAg[j].has(e)) n++; }); if (i !== j) mx = Math.max(mx, n); cells.push([j, i, n]); }));
+  chart('ch-cooc').setOption({
+    textStyle: TXT(), grid: {left: 8, right: 8, top: 8, bottom: 8, containLabel: true},
+    tooltip: {backgroundColor: css('--ink'), borderWidth: 0, textStyle: {color: css('--ground'), fontSize: 12},
+      formatter: p => p.value[0] === p.value[1] ? `<b>${AGS[p.value[1]]}</b><br>${int(p.value[2])} empresas asistidas` : `<b>${AGS[p.value[1]]}</b> y <b>${AGS[p.value[0]]}</b><br>${int(p.value[2])} empresas compartidas`},
+    xAxis: {type: 'category', data: AGS.map(a => a.replace('URUGUAY XXI', 'U. XXI')), position: 'top', axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 10.5, interval: 0}},
+    yAxis: {type: 'category', data: AGS.map(a => a.replace('URUGUAY XXI', 'U. XXI')), inverse: true, axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 11}},
+    visualMap: {show: false, min: 0, max: mx || 1, inRange: {color: [css('--surface2'), css('--seq3'), css('--seq6')]}, dimension: 2},
+    series: [{type: 'heatmap', data: cells.map(c => ({value: c, itemStyle: c[0] === c[1] ? {color: css('--surface2')} : undefined,
+        label: {color: c[0] !== c[1] && c[2] > mx * 0.55 ? '#fff' : css('--ink')}})),
+      label: {show: true, fontSize: 11.5, formatter: p => p.value[2] ? int(p.value[2]) : ''},
+      itemStyle: {borderColor: css('--surface'), borderWidth: 3, borderRadius: 4}}]
+  }, true);
+}
+
+/* ---------- ejecución ---------- */
+function renderEje() {
+  const P = periodos(); const cs = convSel(); const ot = solSel().filter(s => s.otorg);
+  const per = P.map(p => { const x = cs.filter(c => pk(c) === p.k && c.asignado);
+    return {a: x.reduce((n, c) => n + c.asignado, 0), ap: x.reduce((n, c) => n + c.aprobado, 0), e: x.reduce((n, c) => n + c.ejecutado, 0),
+            sin: cs.filter(c => pk(c) === p.k && !c.asignado).length, n: x.length}; });
+  const L = per.at(-1), Lp = per.at(-2);
+  const t = (a, b) => b ? Math.round(a / b * 100) : 0;
+  const cpt = ot.filter(s => pk(s) === P.at(-1).k).reduce((n, s) => n + s.cpt, 0);
+  $('tiles-eje').innerHTML = [
+    {l: 'Presupuesto asignado', v: '$ ' + dec(L.a / 1e6) + '<small>M</small>', d: deltaTxt(L.a, Lp?.a)},
+    {l: 'Tasa de compromiso', v: t(L.ap, L.a) + '<small>%</small>', d: {t: `$ ${dec(L.ap / 1e6)} M aprobados`, cls: ''}},
+    {l: 'Tasa de ejecución', v: t(L.e, L.a) + '<small>%</small>', d: {t: `$ ${dec(L.e / 1e6)} M ejecutados`, cls: ''}},
+    {l: 'Contrapartida movilizada', v: '$ ' + dec(cpt / 1e6) + '<small>M</small>', d: {t: `${dec(cpt / (L.ap || 1), 2)} pesos privados por peso aprobado`, cls: ''}},
+  ].map(x => `<div class="tile"><span class="lbl">${x.l}</span><span class="val display">${x.v}</span><span class="delta ${x.d.cls}">${P.at(-1).l.replace('*','')} · ${x.d.t}</span></div>`).join('');
+
+  const o = base(); o.xAxis.data = P.map(p => p.l); o.yAxis.axisLabel.formatter = fmtAxis(METRICS.aprobado);
+  o.series = [['Asignado', 'a', '--seq2'], ['Aprobado', 'ap', '--seq4'], ['Ejecutado', 'e', '--seq6']].map(([n, k, c]) => ({name: n, type: 'bar', data: per.map(x => x[k]),
+    itemStyle: {color: css(c), borderRadius: [4, 4, 0, 0]}, barGap: '10%', barCategoryGap: '30%'}));
+  o.tooltip.formatter = ps => { const i = ps[0].dataIndex; return `<b>${P[i].l}</b>` + ps.map(p => `<div>${p.marker} ${p.seriesName}: <b>$ ${dec(p.value / 1e6)} M</b></div>`).join('') +
+    `<div style="opacity:.8;margin-top:3px">Compromiso ${t(per[i].ap, per[i].a)}% · Ejecución ${t(per[i].e, per[i].a)}%${per[i].sin ? ` · ${per[i].sin} convocatorias sin presupuesto` : ''}</div>`; };
+  chart('ch-eje').setOption(o, true);
+  window.__eje = P.map((p, i) => ({periodo: p.l, asignado: per[i].a, aprobado: per[i].ap, ejecutado: per[i].e}));
+
+  const cells = [];
+  AGS.forEach((a, i) => P.forEach((p, j) => { const x = cs.filter(c => c.agencia === a && pk(c) === p.k && c.asignado);
+    const A = x.reduce((n, c) => n + c.asignado, 0), E = x.reduce((n, c) => n + c.ejecutado, 0); cells.push([j, i, A ? Math.round(E / A * 100) : null, A, E]); }));
+  chart('ch-heat-eje').setOption({
+    textStyle: TXT(), grid: {left: 8, right: 8, top: 8, bottom: 40, containLabel: true},
+    tooltip: {backgroundColor: css('--ink'), borderWidth: 0, textStyle: {color: css('--ground'), fontSize: 12},
+      formatter: p => `<b>${AGS[p.value[1]]} · ${P[p.value[0]].l}</b><br>${p.value[2] === null ? 'Sin presupuesto informado' : `Ejecución ${p.value[2]}%<br>$ ${dec(p.value[4] / 1e6)} M de $ ${dec(p.value[3] / 1e6)} M`}`},
+    xAxis: {type: 'category', data: P.map(p => p.l), position: 'top', axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 11.5}},
+    yAxis: {type: 'category', data: AGS, inverse: true, axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 11.5}},
+    visualMap: {min: 0, max: 100, orient: 'horizontal', left: 'center', bottom: 0, text: ['100%', '0%'], textStyle: {color: css('--ink2'), fontSize: 11},
+      inRange: {color: [css('--seq1'), css('--seq3'), css('--seq5'), css('--seq7')]}, dimension: 2, itemWidth: 12, itemHeight: 120, calculable: false},
+    series: [{type: 'heatmap', data: cells.map(c => ({value: c, itemStyle: c[2] === null ? {color: css('--surface2')} : undefined,
+        label: {color: c[2] !== null && c[2] > 55 ? '#fff' : css('--ink')}})),
+      label: {show: true, fontSize: 11.5, formatter: p => p.value[2] === null ? '–' : p.value[2] + '%'},
+      itemStyle: {borderColor: css('--surface'), borderWidth: 3, borderRadius: 4}}]
+  }, true);
+
+  const med = xs => { if (!xs.length) return 0; const a = xs.slice().sort((x, y) => x - y); const m = a.length >> 1; return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; };
+  const mecs = M.mecanismos.map(mc => ({mc, n: ot.filter(s => s.c.mecanismo === mc && s.apr).length})).filter(x => x.n >= 20)
+    .sort((a, b) => b.n - a.n).slice(0, 6).map(x => x.mc);
+  const o3 = base(); o3.xAxis.data = P.map(p => p.l); o3.yAxis.axisLabel.formatter = fmtMoneyAxis;
+  o3.series = mecs.map(mc => ({name: mc, type: 'line', symbol: 'circle', symbolSize: 7, lineStyle: {width: 2}, itemStyle: {color: colorFor('mecanismo', mc)},
+    data: P.map(p => med(ot.filter(s => s.c.mecanismo === mc && pk(s) === p.k && s.apr).map(s => s.apr)))}));
+  o3.tooltip.formatter = ps => `<b>${P[ps[0].dataIndex].l}</b>` + ps.filter(p => p.value).sort((a, b) => b.value - a.value).map(p => `<div>${p.marker} ${esc(p.seriesName)}: <b>$ ${fmtMoneyAxis(p.value)}</b></div>`).join('');
+  chart('ch-ticket').setOption(o3, true);
+  document.querySelector('#ch-ticket').previousElementSibling.querySelector('.sub').textContent = `Mediana del monto aprobado por apoyo otorgado, por período, en los ${mecs.length} mecanismos monetarios con al menos veinte apoyos.`;
+}
+
+/* ---------- territorio ---------- */
+function renderTerritorio() {
+  const A = agg('empresas', 'depto', {max: 999}); const P = A.P; const last = P.length - 1;
+  const cats = A.cats.slice().sort((a, b) => b.vals[last] - a.vals[last]).reverse();
+  const o = base(); o.grid = {left: 8, right: 40, top: 6, bottom: 34, containLabel: true};
+  o.xAxis = {type: 'value', axisLabel: {color: css('--muted'), fontSize: 11}, splitLine: {lineStyle: {color: css('--grid')}}};
+  o.yAxis = {type: 'category', data: cats.map(c => c.cat), axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 11.5}};
+  const prev = last - 1;
+  o.series = [];
+  if (prev >= 0) o.series.push({name: P[prev].l, type: 'bar', data: cats.map(c => c.vals[prev]), barGap: '-100%', barCategoryGap: '30%', z: 1,
+    itemStyle: {color: css('--seq2'), borderRadius: [0, 3, 3, 0]}});
+  o.series.push({name: P[last].l, type: 'bar', data: cats.map(c => c.vals[last]), barCategoryGap: '30%', barWidth: '55%', z: 2,
+    itemStyle: {color: css('--seq5'), borderRadius: [0, 3, 3, 0]},
+    label: {show: true, position: 'right', color: css('--ink2'), fontSize: 10.5, formatter: p => {
+      const pv = prev >= 0 ? cats[p.dataIndex].vals[prev] : 0; const d = pv ? Math.round((p.value - pv) / pv * 100) : null;
+      return int(p.value) + (d === null ? '' : `  (${d >= 0 ? '+' : ''}${d}%)`); }}});
+  o.legend.data = o.series.map(s => s.name).reverse();
+  o.tooltip.formatter = ps => `<b>${ps[0].name}</b>` + ps.map(p => `<div>${p.marker} ${p.seriesName}: <b>${int(p.value)}</b></div>`).join('');
+  chart('ch-depto').setOption(o, true);
+  const totL = cats.reduce((n, c) => n + c.vals[last], 0), mvd = cats.find(c => c.cat === 'Montevideo')?.vals[last] || 0;
+  document.querySelector('#ch-depto').previousElementSibling.querySelector('.sub').textContent =
+    `${P[last].l.replace('*', '')} en barra plena y ${prev >= 0 ? P[prev].l.replace('*', '') + ' como sombra' : 'sin período anterior'}; la variación entre paréntesis. Fuera de Montevideo: ${Math.round((totL - mvd) / (totL || 1) * 100)}% de las empresas asistidas.`;
+  window.__depto = cats.map(c => Object.fromEntries([['departamento', c.cat], ...P.map((p, i) => [p.l, c.vals[i]])]));
+
+  const ot = solSel().filter(s => s.otorg && pk(s) === P[last].k);
+  const cells = []; let mx = 0;
+  M.sectores.forEach((sec, i) => AGS.forEach((a, j) => { const n = new Set(ot.filter(s => s.agencia === a && EMP[s.emp].sector === sec).map(s => s.emp)).size; mx = Math.max(mx, n); cells.push([j, i, n]); }));
+  chart('ch-heat-sector').setOption({
+    textStyle: TXT(), grid: {left: 8, right: 8, top: 8, bottom: 40, containLabel: true},
+    tooltip: {backgroundColor: css('--ink'), borderWidth: 0, textStyle: {color: css('--ground'), fontSize: 12},
+      formatter: p => `<b>${M.sectores[p.value[1]]} · ${AGS[p.value[0]]}</b><br>${int(p.value[2])} empresas asistidas en ${P[last].l}`},
+    xAxis: {type: 'category', data: AGS.map(a => a.replace('URUGUAY XXI', 'U. XXI')), position: 'top', axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 10.5, interval: 0}},
+    yAxis: {type: 'category', data: M.sectores, inverse: true, axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: css('--ink2'), fontSize: 11, width: 175, overflow: 'truncate'}},
+    visualMap: {min: 0, max: mx || 1, orient: 'horizontal', left: 'center', bottom: 0, text: [int(mx), '0'], textStyle: {color: css('--ink2'), fontSize: 11},
+      inRange: {color: [css('--surface2'), css('--seq3'), css('--seq6')]}, dimension: 2, itemWidth: 12, itemHeight: 120},
+    series: [{type: 'heatmap', data: cells.map(c => ({value: c, label: {color: c[2] > mx * 0.55 ? '#fff' : css('--ink')}})), label: {show: true, fontSize: 11, formatter: p => p.value[2] || ''},
+      itemStyle: {borderColor: css('--surface'), borderWidth: 3, borderRadius: 4}}]
+  }, true);
+}
+
+/* ---------- small multiples ---------- */
+function renderSmalls() {
+  const m = METRICS[S.metric];
+  const A = agg(S.metric, 'institucion'); const P = A.P;
+  const max = Math.max(1, ...A.cats.flatMap(c => c.vals));
+  const ags = AGS.filter(a => !S.agencia || a === S.agencia);
+  $('smalls').innerHTML = ags.map((a, i) => { const c = A.cats.find(x => x.cat === a);
+    return `<div class="small"><h4><i class="dot" style="--c:${colorFor('institucion', a)}"></i>${esc(a)}</h4><p class="tot">${m.money ? '$ ' : ''}${m.fmt(c?.total || 0)}${m.u ? ' ' + m.u : ''} en el período</p><div class="chart" id="sm-${i}"></div></div>`; }).join('');
+  ags.forEach((a, i) => { const c = A.cats.find(x => x.cat === a); const v = c ? c.vals : P.map(() => 0);
+    chart('sm-' + i).setOption({textStyle: TXT(), grid: {left: 6, right: 8, top: 18, bottom: 22, containLabel: true},
+      tooltip: {trigger: 'axis', backgroundColor: css('--ink'), borderWidth: 0, textStyle: {color: css('--ground'), fontSize: 12}, formatter: ps => `<b>${P[ps[0].dataIndex].l}</b><br>${fmtVal(m, ps[0].value)}`},
+      xAxis: {type: 'category', data: P.map(p => p.l), axisTick: {show: false}, axisLine: {lineStyle: {color: css('--axis')}}, axisLabel: {color: css('--muted'), fontSize: 10.5}},
+      yAxis: {type: 'value', max, splitLine: {lineStyle: {color: css('--grid')}}, axisLabel: {color: css('--muted'), fontSize: 10, formatter: fmtAxis(m)}},
+      series: [{type: 'bar', data: v, barMaxWidth: 34, itemStyle: {color: colorFor('institucion', a), borderRadius: [3, 3, 0, 0]},
+        label: {show: true, position: 'top', fontSize: 10.5, color: css('--ink2'), formatter: p => m.money ? dec(p.value / 1e6, 0) : int(p.value)}}]}, true); });
+}
+
+/* ---------- ficha instrumento ---------- */
+let trigger = null;
+function fichaInstr(i) {
+  const r = instrRows[i], ins = r.ins, m = METRICS[S.metric];
+  const A = agg(S.metric, 'ninguna');
+  const lineas = M.lineas.filter(l => l.instrumento_id === ins.id);
+  const rows = m.nivel === 'sol' ? solSel().filter(s => s.c.instrumento_id === ins.id && (!m.otorg || s.otorg)) : convSel().filter(c => c.instrumento_id === ins.id);
+  const P = A.P;
+  const porLinea = lineas.map(l => ({l, vals: P.map(p => { const x = rows.filter(r => (m.nivel === 'sol' ? r.c.linea_id : r.linea_id) === l.id && pk(r) === p.k);
+    return m.kind === 'distinct' ? new Set(x.map(m.key)).size : m.kind === 'count' ? x.length : x.reduce((n, r) => n + m.val(r), 0); })}));
+  const ot = solSel().filter(s => s.c.instrumento_id === ins.id && s.otorg);
+  trigger = document.activeElement;
+  $('ficha-tipo').textContent = 'INSTRUMENTO';
+  $('ficha-body').innerHTML = `<h3>${esc(ins.nombre)}</h3><p style="font-size:12.5px;color:var(--ink2);margin:0"><i class="dot" style="--c:${colorFor('institucion', ins.agencia)}"></i>${esc(ins.agencia)} · ${lineas.length} líneas · estado ${esc(ins.estado.toLowerCase())}</p>
+   <dl class="kv"><div><dt>Empresas asistidas</dt><dd>${int(new Set(ot.map(s => s.emp)).size)}</dd></div><div><dt>Apoyos otorgados</dt><dd>${int(ot.length)}</dd></div>
+   <div><dt>Monto aprobado</dt><dd>$ ${dec(ot.reduce((n, s) => n + s.apr, 0) / 1e6)} M</dd></div><div><dt>Monto ejecutado</dt><dd>$ ${dec(ot.reduce((n, s) => n + s.eje, 0) / 1e6)} M</dd></div></dl>
+   <h4 style="font-size:13px;margin:14px 0 8px">${esc(m.l)} por línea</h4>
+   <div class="tw"><table><thead><tr><th>Línea</th><th>Mecanismo</th>${P.map(p => `<th class="num">${p.l}</th>`).join('')}</tr></thead><tbody>
+   ${porLinea.map(x => `<tr><td>${esc(x.l.nombre)}</td><td style="color:var(--muted)">${esc(x.l.mecanismo)}</td>${x.vals.map(v => `<td class="num">${v ? (m.money ? dec(v / 1e6) : int(v)) : '·'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+   ${ins.url ? `<p class="note"><a href="${esc(ins.url)}" target="_blank" rel="noopener">Ficha oficial del instrumento</a></p>` : ''}
+   <p class="note">Cifras simuladas sobre la estructura real del instrumento y sus líneas.</p>`;
+  $('ficha').showModal();
+}
+$('cerrar').addEventListener('click', () => $('ficha').close());
+$('ficha').addEventListener('close', () => { if (trigger?.isConnected) trigger.focus(); });
+
+/* ---------- CSV y tabla ---------- */
+function csv(nombre, rows) {
+  if (!rows?.length) return;
+  const keys = Object.keys(rows[0]);
+  const cell = x => '"' + String(x ?? '').replace(/^[=+@-]/, "'$&").replaceAll('"', '""') + '"';
+  const txt = '﻿' + [keys.map(cell).join(';'), ...rows.map(r => keys.map(k => cell(r[k])).join(';'))].join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], {type: 'text/csv;charset=utf-8'})); a.download = nombre + '.csv'; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function evolRows() { const A = lastAgg; return A.cats.map(c => Object.fromEntries([[A.d.l, c.cat], ...A.P.map((p, i) => [p.l, c.vals[i]]), ['Total', c.total]])); }
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.csv) {
+    const k = b.dataset.csv;
+    if (k === 'evol') csv('evolucion_' + S.metric, evolRows());
+    if (k === 'rank') csv('ranking_instrumentos', window.__rank);
+    if (k === 'instr') csv('instrumentos_' + S.metric, instrRows.map(r => Object.fromEntries([['instrumento', r.cat], ['institucion', r.ins.agencia], ...lastAgg.P.map((p, i) => [p.l, r.vals[i]]), ['total', r.total]])));
+    if (k === 'nuevas') csv('empresas_nuevas_recurrentes', window.__nuevas);
+    if (k === 'eje') csv('ejecucion_periodo', window.__eje);
+    if (k === 'depto') csv('empresas_departamento', window.__depto);
+  }
+  if (b.dataset.tabla) {
+    const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', String(on)); b.textContent = on ? 'Ver gráfico' : 'Ver tabla';
+    const el = $('ch-evol');
+    if (on) { const rows = evolRows(), keys = Object.keys(rows[0]);
+      el.insertAdjacentHTML('afterend', `<div id="evol-table" class="tw" style="max-height:380px"><table><thead><tr>${keys.map((k, i) => `<th class="${i ? 'num' : ''}">${esc(k)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${keys.map((k, i) => `<td class="${i ? 'num' : ''}">${i ? (lastAgg.m.money ? dec(r[k] / 1e6) : int(r[k])) : esc(r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+      el.hidden = true; }
+    else { $('evol-table')?.remove(); el.hidden = false; charts['ch-evol'].resize(); }
+  }
+  if (b.dataset.metric) { S.metric = b.dataset.metric; syncSeg(); render(); }
+});
+$('t-instr').addEventListener('click', e => { const tr = e.target.closest('tr[data-i]'); if (tr) fichaInstr(+tr.dataset.i); });
+$('t-instr').addEventListener('keydown', e => { const tr = e.target.closest('tr[data-i]'); if (tr && e.key === 'Enter') fichaInstr(+tr.dataset.i); });
+
+/* ---------- controles ---------- */
+const opt = x => `<option value="${esc(x)}">${esc(x)}</option>`;
+$('f-agencia').insertAdjacentHTML('beforeend', AGS.map(opt).join(''));
+$('f-mecanismo').insertAdjacentHTML('beforeend', M.mecanismos.map(opt).join(''));
+$('f-necesidad').insertAdjacentHTML('beforeend', M.necesidades.map(opt).join(''));
+['agencia', 'mecanismo', 'necesidad'].forEach(k => $('f-' + k).addEventListener('change', e => { S[k] = e.target.value; render(); }));
+$('seg-anios').innerHTML = ANIOS.map(y => `<button data-y="${y}" aria-pressed="true">${y}</button>`).join('');
+$('seg-metric').innerHTML = Object.entries(METRICS).map(([k, m]) => `<button data-v="${k}" aria-pressed="${k === S.metric}">${m.l}</button>`).join('');
+$('seg-dim').innerHTML = Object.entries(DIMS).map(([k, d]) => `<button data-v="${k}" aria-pressed="${k === S.dim}">${d.l}</button>`).join('');
+function seg(id, key) { $(id).addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.disabled) return; S[key] = b.dataset.v; syncSeg(); render(); }); }
+seg('seg-gran', 'gran'); seg('seg-metric', 'metric'); seg('seg-dim', 'dim'); seg('seg-vista', 'vista');
+$('seg-anios').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const y = +b.dataset.y;
+  if (S.anios.has(y)) { if (S.anios.size > 1) S.anios.delete(y); } else S.anios.add(y); syncSeg(); render(); });
+function syncSeg() {
+  [['seg-gran', 'gran'], ['seg-metric', 'metric'], ['seg-dim', 'dim'], ['seg-vista', 'vista']].forEach(([id, k]) =>
+    document.querySelectorAll('#' + id + ' button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === S[k]))));
+  document.querySelectorAll('#seg-anios button').forEach(b => b.setAttribute('aria-pressed', String(S.anios.has(+b.dataset.y))));
+}
+$('reset').addEventListener('click', () => { Object.assign(S, {gran: 'anual', anios: new Set(ANIOS), agencia: '', mecanismo: '', necesidad: '', metric: 'empresas', dim: 'ninguna', vista: 'apilado'});
+  ['agencia', 'mecanismo', 'necesidad'].forEach(k => $('f-' + k).value = ''); syncSeg(); render(); });
+$('theme').addEventListener('click', () => { const cur = document.documentElement.getAttribute('data-theme');
+  const dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark'); render(); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => render());
+addEventListener('resize', () => Object.values(charts).forEach(c => c.resize()));
+const obs = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) document.querySelectorAll('nav.tabs a').forEach(a => a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + x.target.id))); }), {rootMargin: '-30% 0px -60% 0px'});
+document.querySelectorAll('section').forEach(s => obs.observe(s));
+
+/* ---------- notas ---------- */
+$('prosa').innerHTML = `
+<p>El monitor presenta el ecosistema en períodos anuales o semestrales. Cada solicitud se asigna al período de su fecha de resolución y, cuando todavía no tiene resolución, al de su fecha de presentación. Cada convocatoria se asigna al período de su apertura. El período en curso se marca con asterisco y queda cerrado en la fecha de corte, por lo que sus cifras son parciales y no comparables con un período completo.</p>
+<p>Los indicadores de <strong>empresas asistidas</strong> e <strong>instrumentos activos</strong> cuentan entidades distintas dentro de cada período y categoría. Una empresa apoyada por dos instituciones cuenta una vez en el total y una vez en cada institución, por lo que la suma de las categorías desagregadas puede superar el total sin desagregar. Los montos y los conteos de apoyos y solicitudes son aditivos. Los montos se expresan en pesos uruguayos corrientes, sin deflactar.</p>
+<p>El <strong>presupuesto asignado</strong> se registra por convocatoria y admite desagregación por institución, mecanismo, necesidad, etapa e instrumento. No admite tamaño, sector ni departamento, que son atributos de la empresa solicitante; al elegir una de esas vistas el gráfico vuelve al total y lo indica.</p>
+<p>Cuando una desagregación tiene más de ocho categorías, el gráfico muestra las siete de mayor volumen y agrupa el resto en Otros. El color de cada categoría se fija según su volumen en el conjunto completo de datos y se mantiene al aplicar filtros, de modo que una misma institución, mecanismo o sector conserva su color en todas las vistas. Los colores de institución siguen un orden fijo validado para visión con daltonismo.</p>
+<p>Las <strong>empresas nuevas</strong> son las que reciben su primer apoyo registrado en cualquier institución dentro del período; las recurrentes ya tenían uno anterior. Esta distinción, la circulación entre instituciones y la matriz de empresas compartidas dependen de la identificación única del beneficiario por RUT en la capa interinstitucional del SII-CTI.</p>
+<p>Los instrumentos y líneas corresponden al portafolio clasificado del subconjunto empresarial: ${M.instrumentos.length} instrumentos y ${M.lineas.length} líneas de ocho instituciones. Las convocatorias, solicitudes y empresas son simuladas con órdenes de magnitud plausibles para demostrar el tablero y no describen la realidad de ninguna institución. Estructura de datos: <code>${esc(M.meta.origen_estructura)}</code>. Portafolio: <code>${esc(M.meta.origen_portafolio)}</code>. Fecha de corte: ${HOY.toLocaleDateString('es-UY', {day: 'numeric', month: 'long', year: 'numeric'})}. Consultas: ${esc(M.meta.contacto)}.</p>`;
+
+/* ---------- render ---------- */
+function render() {
+  const cs = convSel(), ss = solSel();
+  $('resumen').textContent = `${int(uniq(cs.map(c => c.instrumento_id)).length)} instrumentos · ${int(cs.length)} convocatorias · ${int(ss.length)} solicitudes · ${int(uniq(ss.filter(s => s.otorg).map(s => s.emp)).length)} empresas en la selección`;
+  $('evol-table')?.remove(); $('ch-evol').hidden = false; const tb = document.querySelector('[data-tabla]'); tb.setAttribute('aria-pressed', 'false'); tb.textContent = 'Ver tabla';
+  renderTiles(); renderEvol(); renderTree(); renderInstr(); renderEmpresas(); renderEje(); renderTerritorio(); renderSmalls();
+}
+const f = HOY.toLocaleDateString('es-UY', {day: 'numeric', month: 'long', year: 'numeric'});
+$('corte').textContent = 'Corte al ' + f; $('foot').textContent = 'Corte al ' + f + ' · datos de ejecución simulados';
+render();
+window.MON = {S, agg, render, periodos};
+});
+</script>
+</body></html>
