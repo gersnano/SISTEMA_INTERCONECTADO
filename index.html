@@ -96,6 +96,7 @@ section:last-of-type{border:0}
 .shead h2{font-size:22px;margin:0 0 4px;font-weight:600}
 .shead p{margin:0;font-size:13px;color:var(--ink2);max-width:80ch}
 .card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:18px 20px;min-width:0}
+.localtools{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 12px;padding:8px 9px;background:var(--surface2);border:1px solid var(--hair);border-radius:8px}.localtools .local-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:3px}.localtools select{max-width:180px;background:var(--surface);border:1px solid var(--hair);border-radius:6px;padding:5px 7px;font-size:11.5px}.localtools button{border:1px solid var(--hair);background:var(--surface);border-radius:6px;padding:5px 8px;font-size:11px;color:var(--ink2)}.localtools button:hover{color:var(--ink);border-color:var(--axis)}.localtools .active-count{margin-left:auto;font-size:10.5px;color:var(--muted)}
 .card h3{font-size:15px;margin:0 0 2px;font-weight:600}
 .card .sub{font-size:12px;color:var(--muted);margin:0 0 12px}
 .chead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px}
@@ -171,8 +172,11 @@ footer{padding-block:22px 40px;font-size:11.5px;color:var(--muted);display:flex;
 .skip{position:fixed;left:-999px;top:8px;background:var(--surface);padding:8px;z-index:99}
 .skip:focus{left:8px}
 .aviso{background:color-mix(in srgb,var(--warn) 16%,transparent);border-left:3px solid var(--warn);padding:8px 12px;border-radius:6px;font-size:12px;margin:0 0 10px}
+.topband{height:110px;background:linear-gradient(90deg,rgba(24,42,94,.94),rgba(36,64,141,.72)),url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1800&q=80') center/cover}
+.agenda{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.agenda .month{background:var(--surface);border:1px solid var(--ring);border-radius:10px;overflow:hidden}.agenda h3{margin:0;padding:10px 12px;background:var(--brand-soft);font-size:14px}.agenda .event{padding:9px 12px;border-top:1px solid var(--grid);font-size:11.5px}.agenda .event b{display:block;font-weight:600}.agenda .event small{color:var(--muted)}.agenda .state{float:right;border-radius:99px;padding:2px 6px;font-size:9px;font-weight:600}.agenda .open{background:#d8f1e9;color:#236d62}.agenda .soon{background:#fff0cc;color:#8a5f12}.agenda .closed{background:#eceff1;color:#66717b}.agenda-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.agenda-tools select{background:var(--surface2);border:1px solid transparent;border-radius:8px;padding:6px 9px;font-size:12px}
 
 @media(max-width:1180px){.tiles,.tiles.t4{grid-template-columns:repeat(3,1fr)}.smalls{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.agenda{grid-template-columns:1fr 1fr}}
 @media(max-width:900px){.g2,.g21,.g3{grid-template-columns:1fr}.kv{grid-template-columns:1fr 1fr}.controls{position:static}}
 @media(max-width:640px){
  .wrap{padding-inline:16px}.tiles,.tiles.t4{grid-template-columns:1fr 1fr;gap:10px}.tile{min-width:0;overflow:hidden}.tile .val{font-size:22px}
@@ -181,6 +185,8 @@ footer{padding-block:22px 40px;font-size:11.5px;color:var(--muted);display:flex;
  .controls select{max-width:100%;width:100%}.cgroup{width:100%}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.instrument-group{background:var(--surface);border:1px solid var(--hair);border-radius:10px;margin:10px 0;overflow:hidden}.instrument-group summary{padding:18px;cursor:pointer;font-weight:600;font-size:15px}.instrument-group summary .chip{margin-left:12px}.instrument-group[open] summary{border-bottom:1px solid var(--hair);background:var(--brand-soft)}.instrument-group .tw{border:0;border-radius:0}.open-instrument{border:1px solid var(--hair);background:var(--surface2);border-radius:6px;padding:7px 10px;white-space:nowrap}.instrument-group td:first-child{width:30%}.instrument-group summary:focus-visible,.open-instrument:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.group-values{display:flex;flex-wrap:wrap;gap:18px 36px;margin-top:12px;font-weight:400}.group-values>span{min-width:140px}.group-values small{display:block;color:var(--ink2);font-size:11px}.group-values b{font-size:20px;font-variant-numeric:tabular-nums}.instrument-group td{max-width:280px;white-space:normal}.instrument-group td.num{white-space:nowrap}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
 <script defer src="datos-monitor.js"></script>
@@ -196,7 +202,7 @@ footer{padding-block:22px 40px;font-size:11.5px;color:var(--muted);display:flex;
  </div>
  <div class="titlerow"><h1>Monitor del ecosistema de apoyos a empresas</h1>
   <p>Visión anual y semestral de los instrumentos públicos de apoyo empresarial: cuántas empresas fueron asistidas, cuántos apoyos se otorgaron y cuánto se aprobó y ejecutó, con la posibilidad de desagregar cada cifra por institución, mecanismo, necesidad, tamaño de empresa, sector o territorio.</p></div>
- <nav class="tabs" aria-label="Secciones"><a href="#panorama">Panorama</a><a href="#composicion">Composición</a><a href="#instrumentos">Instrumentos</a><a href="#empresas">Empresas asistidas</a><a href="#ejecucion">Ejecución</a><a href="#territorio">Territorio y sectores</a><a href="#comparar">Comparar instituciones</a><a href="#notas">Notas</a></nav>
+ <nav class="tabs" aria-label="Secciones"><a href="#panorama">Panorama</a><a href="#agenda">Calendario</a><a href="#composicion">Composición</a><a href="#instrumentos">Instrumentos</a><a href="#empresas">Empresas asistidas</a><a href="#ejecucion">Ejecución</a><a href="#territorio">Territorio y sectores</a><a href="#comparar">Comparar instituciones</a><a href="#notas">Notas</a></nav>
 </div></header>
 
 <div class="controls"><div class="wrap">
@@ -205,7 +211,7 @@ footer{padding-block:22px 40px;font-size:11.5px;color:var(--muted);display:flex;
   <div class="cgroup"><span class="clabel">Años</span><div class="seg" id="seg-anios"></div></div>
   <div class="cgroup"><span class="clabel">Institución</span><select id="f-agencia"><option value="">Todas</option></select></div>
   <div class="cgroup"><span class="clabel">Mecanismo</span><select id="f-mecanismo"><option value="">Todos</option></select></div>
-  <div class="cgroup"><span class="clabel">Necesidad</span><select id="f-necesidad"><option value="">Todas</option></select></div>
+  <div class="cgroup"><span class="clabel">Finalidad</span><select id="f-necesidad"><option value="">Todas</option></select></div>
   <button id="reset">Restablecer</button>
   <p id="resumen" role="status" aria-live="polite"></p>
  </div>
@@ -230,6 +236,11 @@ footer{padding-block:22px 40px;font-size:11.5px;color:var(--muted);display:flex;
  </div>
 </section>
 
+<section id="agenda">
+ <div class="shead"><div><h2>Calendario operativo</h2><p>Instrumentos abiertos, próximos y cerrados según la selección activa. La agenda usa los mismos filtros del monitor.</p></div></div>
+ <div class="card"><div class="agenda-tools"><span class="clabel">Estado</span><select id="agenda-estado"><option value="">Todos</option><option value="Abierto">Abiertos</option><option value="Próximo">Próximos</option><option value="Cerrado">Cerrados</option></select><span class="note">Abrir una convocatoria permite anticipar derivaciones y próximos apoyos.</span></div><div id="agenda-grid" class="agenda"></div></div>
+</section>
+
 <section id="composicion">
  <div class="shead"><div><h2>Composición</h2><p>Dónde se concentra el indicador seleccionado. El mapa de área se recorre por niveles: institución, instrumento y línea. Un clic entra en el nivel; el rastro superior vuelve.</p></div></div>
  <div class="g21">
@@ -239,9 +250,10 @@ footer{padding-block:22px 40px;font-size:11.5px;color:var(--muted);display:flex;
 </section>
 
 <section id="instrumentos">
- <div class="shead"><div><h2>Instrumentos</h2><p>Serie del indicador por instrumento en cada período, con el peso relativo de cada celda. Seleccionar una fila abre el detalle por línea.</p></div>
+ <div class="shead"><div><h2>Instrumentos</h2><p>Elegí una finalidad o un mecanismo, desplegá el grupo y abrí la ficha del instrumento.</p></div>
   <div class="tools"><button data-csv="instr">CSV</button></div></div>
- <div class="tw" style="max-height:600px"><table id="t-instr"><thead></thead><tbody></tbody></table></div>
+ <div class="localtools"><label for="instr-group">Agrupar por</label><select id="instr-group"><option value="necesidad">Finalidad</option><option value="mecanismo">Mecanismo</option></select><button type="button" id="instr-expand">Desplegar todos</button><button type="button" id="instr-collapse">Contraer todos</button></div>
+ <div id="t-instr"></div>
  <p class="note" id="instr-note"></p>
 </section>
 
@@ -342,7 +354,7 @@ const DIMS = {
   ninguna:     {l: 'Sin desagregar', nivel: 'any'},
   institucion: {l: 'Institución', nivel: 'any', sol: s => s.agencia, conv: c => c.agencia, orden: AGS},
   mecanismo:   {l: 'Mecanismo', nivel: 'any', sol: s => s.c.mecanismo, conv: c => c.mecanismo, orden: M.mecanismos},
-  necesidad:   {l: 'Necesidad', nivel: 'any', sol: s => s.c.necesidad, conv: c => c.necesidad, orden: M.necesidades},
+  necesidad:   {l: 'Finalidad', nivel: 'any', sol: s => s.c.necesidad, conv: c => c.necesidad, orden: M.necesidades},
   etapa:       {l: 'Etapa', nivel: 'any', sol: s => s.c.etapa, conv: c => c.etapa, orden: M.etapas},
   instrumento: {l: 'Instrumento', nivel: 'any', sol: s => s.c.instrumento, conv: c => c.instrumento, orden: M.instrumentos.map(i => i.nombre)},
   tamano:      {l: 'Tamaño', nivel: 'sol', sol: s => EMP[s.emp].tamano, orden: M.tamanos},
@@ -577,20 +589,34 @@ function renderTree() {
 let instrRows = [];
 function renderInstr() {
   const A = agg(S.metric, 'instrumento', {max: 9999});
-  const m = A.m, P = A.P;
-  const insByName = Object.fromEntries(M.instrumentos.map(i => [i.nombre, i]));
-  const max = Math.max(1, ...A.cats.flatMap(c => c.vals));
-  $('t-instr').querySelector('thead').innerHTML = `<tr><th>Instrumento</th><th>Institución</th>${P.map(p => `<th class="num">${p.l}</th>`).join('')}<th class="num">Total</th><th>Tendencia</th></tr>`;
-  instrRows = A.cats.map(c => ({...c, ins: insByName[c.cat]}));
-  $('t-instr').querySelector('tbody').innerHTML = instrRows.map((r, i) => `<tr class="click" data-i="${i}">
-    <td><b>${esc(r.cat)}</b></td><td><i class="dot" style="--c:${colorFor('institucion', r.ins.agencia)}"></i>${esc(r.ins.agencia)}</td>
-    ${r.vals.map(v => `<td class="cellbar">${v ? (m.money ? dec(v / 1e6) : int(v)) : '<span style="color:var(--muted)">·</span>'}<i style="transform:scaleX(${(v / max).toFixed(3)})"></i></td>`).join('')}
-    <td class="num"><b>${m.money ? dec(r.total / 1e6) : int(r.total)}</b></td><td><div id="tr-${i}" style="width:110px;height:26px"></div></td></tr>`).join('');
-  instrRows.forEach((r, i) => chart('tr-' + i).setOption({animation: false, grid: {left: 2, right: 2, top: 3, bottom: 3},
-    xAxis: {type: 'category', show: false, data: P.map(p => p.l)}, yAxis: {type: 'value', show: false, max},
-    series: [{type: 'line', data: r.vals, showSymbol: false, lineStyle: {width: 1.5, color: css('--seq5')}, areaStyle: {color: css('--seq1'), opacity: .8}}]}, true));
-  $('instr-note').textContent = `${m.l}${m.money ? ' en millones de pesos' : ''}. La barra bajo cada cifra es proporcional al valor máximo de la tabla. ${m.kind === 'distinct' ? 'Cada empresa o instrumento se cuenta una vez por período.' : ''}`;
+  const key = $('instr-group').value;
+  const expanded = new Set([...$('t-instr').querySelectorAll('details[open]')].map(d => d.dataset.group));
+  const byName = new Map(A.cats.map(c => [c.cat,c]));
+  instrRows = M.instrumentos.map(ins => ({ins, cat: ins.nombre,
+    lineas: M.lineas.filter(l => l.instrumento_id === ins.id && okDim(l)),
+    ...(byName.get(ins.nombre) || {vals: A.P.map(() => 0), total: 0})
+  })).filter(r => r.lineas.length).sort((a,b) => a.cat.localeCompare(b.cat,'es'));
+  const groups = new Map();
+  instrRows.forEach((r,i) => uniq(r.lineas.map(l => l[key] || 'Sin clasificar')).forEach(g => {
+    if(!groups.has(g)) groups.set(g,[]);
+    groups.get(g).push({r,i});
+  }));
+  const supports = solSel().filter(s => s.otorg);
+  const totals = rows => ({benef: new Set(rows.map(s => s.emp)).size, apr: rows.reduce((n,s)=>n+s.apr,0), eje: rows.reduce((n,s)=>n+s.eje,0)});
+  const money = v => '$ '+dec(v/1e6,2)+' M';
+  const summary = t => '<span class="group-values"><span><small>Beneficiarios únicos</small><b>'+int(t.benef)+'</b></span><span><small>Aprobado · UYU</small><b>'+money(t.apr)+'</b></span><span><small>Ejecutado · UYU</small><b>'+money(t.eje)+'</b></span></span>';
+  $('t-instr').innerHTML = '<div class="card"><b>Total de la selección</b>'+summary(totals(supports))+'</div>'+[...groups].sort((a,b)=>a[0].localeCompare(b[0],'es')).map(([g,items]) => {
+    const groupSupports = supports.filter(s => (s.c[key] || 'Sin clasificar') === g);
+    return '<details class="instrument-group" data-group="'+esc(g)+'" '+(expanded.has(g)?'open':'')+'><summary>'+esc(g)+' <span class="chip">'+items.length+' instrumentos</span>'+summary(totals(groupSupports))+'</summary><div class="tw"><table><thead><tr><th>Instrumento</th><th>Institución</th><th>'+(key==='necesidad'?'Mecanismo':'Finalidad')+'</th><th class="num">Beneficiarios únicos</th><th class="num">Aprobado · UYU M</th><th class="num">Ejecutado · UYU M</th><th>Ficha</th></tr></thead><tbody>'+items.map(({r,i}) => {
+      const t = totals(groupSupports.filter(s=>s.c.instrumento_id===r.ins.id));
+      return '<tr data-i="'+i+'"><td><b>'+esc(r.cat)+'</b></td><td>'+esc(r.ins.agencia)+'</td><td>'+esc(uniq(r.lineas.filter(l=>(l[key]||'Sin clasificar')===g).map(l=>l[key==='necesidad'?'mecanismo':'necesidad'])).join(' · '))+'</td><td class="num">'+int(t.benef)+'</td><td class="num">'+dec(t.apr/1e6,2)+'</td><td class="num">'+dec(t.eje/1e6,2)+'</td><td><button type="button" class="open-instrument" aria-label="Abrir ficha de '+esc(r.cat)+'">Ver ficha →</button></td></tr>';
+    }).join('')+'</tbody></table></div></details>';
+  }).join('')+(!groups.size?'<p role="status">No hay instrumentos para los filtros seleccionados.</p>':'');
+  $('instr-note').textContent = instrRows.length+' instrumentos. Cifras simuladas para los años y filtros activos. Cada grupo y cada fila incluyen solo los apoyos de esa finalidad o mecanismo. Beneficiarios únicos en todo el período: no se suman entre instrumentos ni grupos, porque una empresa puede participar en varios. Montos en millones de pesos uruguayos. La ficha muestra el instrumento completo dentro de la selección activa.';
 }
+$('instr-group').addEventListener('change', renderInstr);
+$('instr-expand').addEventListener('click', () => $('t-instr').querySelectorAll('details').forEach(d => d.open=true));
+$('instr-collapse').addEventListener('click', () => $('t-instr').querySelectorAll('details').forEach(d => d.open=false));
 
 /* ---------- empresas ---------- */
 function renderEmpresas() {
@@ -701,7 +727,7 @@ function renderEje() {
     data: P.map(p => med(ot.filter(s => s.c.mecanismo === mc && pk(s) === p.k && s.apr).map(s => s.apr)))}));
   o3.tooltip.formatter = ps => `<b>${P[ps[0].dataIndex].l}</b>` + ps.filter(p => p.value).sort((a, b) => b.value - a.value).map(p => `<div>${p.marker} ${esc(p.seriesName)}: <b>$ ${fmtMoneyAxis(p.value)}</b></div>`).join('');
   chart('ch-ticket').setOption(o3, true);
-  document.querySelector('#ch-ticket').previousElementSibling.querySelector('.sub').textContent = `Mediana del monto aprobado por apoyo otorgado, por período, en los ${mecs.length} mecanismos monetarios con al menos veinte apoyos.`;
+  document.querySelector('#ch-ticket').closest('.card').querySelector('.sub').textContent = `Mediana del monto aprobado por apoyo otorgado, por período, en los ${mecs.length} mecanismos monetarios con al menos veinte apoyos.`;
 }
 
 /* ---------- territorio ---------- */
@@ -724,7 +750,7 @@ function renderTerritorio() {
   o.tooltip.formatter = ps => `<b>${ps[0].name}</b>` + ps.map(p => `<div>${p.marker} ${p.seriesName}: <b>${int(p.value)}</b></div>`).join('');
   chart('ch-depto').setOption(o, true);
   const totL = cats.reduce((n, c) => n + c.vals[last], 0), mvd = cats.find(c => c.cat === 'Montevideo')?.vals[last] || 0;
-  document.querySelector('#ch-depto').previousElementSibling.querySelector('.sub').textContent =
+  document.querySelector('#ch-depto').closest('.card').querySelector('.sub').textContent =
     `${P[last].l.replace('*', '')} en barra plena y ${prev >= 0 ? P[prev].l.replace('*', '') + ' como sombra' : 'sin período anterior'}; la variación entre paréntesis. Fuera de Montevideo: ${Math.round((totL - mvd) / (totL || 1) * 100)}% de las empresas asistidas.`;
   window.__depto = cats.map(c => Object.fromEntries([['departamento', c.cat], ...P.map((p, i) => [p.l, c.vals[i]])]));
 
@@ -751,7 +777,7 @@ function renderSmalls() {
   const max = Math.max(1, ...A.cats.flatMap(c => c.vals));
   const ags = AGS.filter(a => !S.agencia || a === S.agencia);
   $('smalls').innerHTML = ags.map((a, i) => { const c = A.cats.find(x => x.cat === a);
-    return `<div class="small"><h4><i class="dot" style="--c:${colorFor('institucion', a)}"></i>${esc(a)}</h4><p class="tot">${m.money ? '$ ' : ''}${m.fmt(c?.total || 0)}${m.u ? ' ' + m.u : ''} en el período</p><div class="chart" id="sm-${i}"></div></div>`; }).join('');
+    return `<div class="small" data-agencia-card="${esc(a)}" tabindex="0" role="button" title="Abrir ficha de institución"><h4><i class="dot" style="--c:${colorFor('institucion', a)}"></i>${esc(a)}</h4><p class="tot">${m.money ? '$ ' : ''}${m.fmt(c?.total || 0)}${m.u ? ' ' + m.u : ''} en el período · ver ficha</p><div class="chart" id="sm-${i}"></div></div>`; }).join('');
   ags.forEach((a, i) => { const c = A.cats.find(x => x.cat === a); const v = c ? c.vals : P.map(() => 0);
     chart('sm-' + i).setOption({textStyle: TXT(), grid: {left: 6, right: 8, top: 18, bottom: 22, containLabel: true},
       tooltip: {trigger: 'axis', backgroundColor: css('--ink'), borderWidth: 0, textStyle: {color: css('--ground'), fontSize: 12}, formatter: ps => `<b>${P[ps[0].dataIndex].l}</b><br>${fmtVal(m, ps[0].value)}`},
@@ -774,7 +800,10 @@ function fichaInstr(i) {
   const ot = solSel().filter(s => s.c.instrumento_id === ins.id && s.otorg);
   trigger = document.activeElement;
   $('ficha-tipo').textContent = 'INSTRUMENTO';
+  const fichaFinalidades = uniq(lineas.map(l => l.necesidad).filter(Boolean)).join(' · ');
+  const fichaMecanismos = uniq(lineas.map(l => l.mecanismo).filter(Boolean)).join(' · ');
   $('ficha-body').innerHTML = `<h3>${esc(ins.nombre)}</h3><p style="font-size:12.5px;color:var(--ink2);margin:0"><i class="dot" style="--c:${colorFor('institucion', ins.agencia)}"></i>${esc(ins.agencia)} · ${lineas.length} líneas · estado ${esc(ins.estado.toLowerCase())}</p>
+   <p class="note"><b>Finalidad:</b> ${esc(fichaFinalidades || '—')}<br><b>Mecanismo:</b> ${esc(fichaMecanismos || '—')}</p>
    <dl class="kv"><div><dt>Empresas asistidas</dt><dd>${int(new Set(ot.map(s => s.emp)).size)}</dd></div><div><dt>Apoyos otorgados</dt><dd>${int(ot.length)}</dd></div>
    <div><dt>Monto aprobado</dt><dd>$ ${dec(ot.reduce((n, s) => n + s.apr, 0) / 1e6)} M</dd></div><div><dt>Monto ejecutado</dt><dd>$ ${dec(ot.reduce((n, s) => n + s.eje, 0) / 1e6)} M</dd></div></dl>
    <h4 style="font-size:13px;margin:14px 0 8px">${esc(m.l)} por línea</h4>
@@ -782,6 +811,20 @@ function fichaInstr(i) {
    ${porLinea.map(x => `<tr><td>${esc(x.l.nombre)}</td><td style="color:var(--muted)">${esc(x.l.mecanismo)}</td>${x.vals.map(v => `<td class="num">${v ? (m.money ? dec(v / 1e6) : int(v)) : '·'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
    ${ins.url ? `<p class="note"><a href="${esc(ins.url)}" target="_blank" rel="noopener">Ficha oficial del instrumento</a></p>` : ''}
    <p class="note">Cifras simuladas sobre la estructura real del instrumento y sus líneas.</p>`;
+  $('ficha').showModal();
+}
+function fichaAgencia(agencia) {
+  trigger = document.activeElement;
+  const m = METRICS[S.metric], ins = M.instrumentos.filter(i => i.agencia === agencia);
+  const lineas = M.lineas.filter(l => l.agencia === agencia);
+  const cs = convSel().filter(c => c.agencia === agencia), ss = solSel().filter(s => s.agencia === agencia);
+  const ot = ss.filter(s => s.otorg);
+  const totalApr = ot.reduce((n, s) => n + s.apr, 0), totalEje = ot.reduce((n, s) => n + s.eje, 0);
+  const porIns = ins.map(i => { const ls = lineas.filter(l => l.instrumento_id === i.id); const ids = new Set(ls.map(l => l.id)); const r = ot.filter(s => ids.has(s.c.linea_id)); return {i, ls, n: r.length, emp: new Set(r.map(s => s.emp)).size, apr: r.reduce((n,s)=>n+s.apr,0)}; });
+  $('ficha-tipo').textContent = 'FICHA DE INSTITUCIÓN';
+  $('ficha-body').innerHTML = `<h3>${esc(agencia)}</h3><p style="font-size:12.5px;color:var(--ink2);margin:0">Cartera completa en la selección activa · ${ins.length} instrumentos · ${lineas.length} líneas</p>
+   <dl class="kv"><div><dt>Beneficiarios</dt><dd>${int(new Set(ot.map(s=>s.emp)).size)}</dd></div><div><dt>Apoyos otorgados</dt><dd>${int(ot.length)}</dd></div><div><dt>Monto aprobado</dt><dd>$ ${dec(totalApr/1e6)} M</dd></div><div><dt>Monto ejecutado</dt><dd>$ ${dec(totalEje/1e6)} M</dd></div></dl>
+   <h4 style="font-size:13px;margin:14px 0 8px">Instrumentos de ${esc(agencia)}</h4><div class="tw"><table><thead><tr><th>Instrumento</th><th>Finalidad</th><th>Mecanismo</th><th class="num">Beneficiarios</th><th class="num">Apoyos</th><th class="num">Aprobado</th></tr></thead><tbody>${porIns.map(x=>{const f=uniq(x.ls.map(l=>l.necesidad).filter(Boolean)).join(' · '), me=uniq(x.ls.map(l=>l.mecanismo).filter(Boolean)).join(' · ');return `<tr><td><b>${esc(x.i.nombre)}</b></td><td>${esc(f||'—')}</td><td>${esc(me||'—')}</td><td class="num">${int(x.emp)}</td><td class="num">${int(x.n)}</td><td class="num">$ ${dec(x.apr/1e6)} M</td></tr>`}).join('')}</tbody></table></div><p class="note">${int(cs.length)} convocatorias y ${int(ss.length)} solicitudes en la selección activa. Cifras simuladas.</p>`;
   $('ficha').showModal();
 }
 $('cerrar').addEventListener('click', () => $('ficha').close());
@@ -820,6 +863,8 @@ document.addEventListener('click', e => {
 });
 $('t-instr').addEventListener('click', e => { const tr = e.target.closest('tr[data-i]'); if (tr) fichaInstr(+tr.dataset.i); });
 $('t-instr').addEventListener('keydown', e => { const tr = e.target.closest('tr[data-i]'); if (tr && e.key === 'Enter') fichaInstr(+tr.dataset.i); });
+document.addEventListener('click', e => { const card = e.target.closest('[data-agencia-card]'); if (card) fichaAgencia(card.dataset.agenciaCard); });
+document.addEventListener('keydown', e => { const card = e.target.closest('[data-agencia-card]'); if (card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); fichaAgencia(card.dataset.agenciaCard); } });
 
 /* ---------- controles ---------- */
 const opt = x => `<option value="${esc(x)}">${esc(x)}</option>`;
@@ -838,6 +883,21 @@ function syncSeg() {
   [['seg-gran', 'gran'], ['seg-metric', 'metric'], ['seg-dim', 'dim'], ['seg-vista', 'vista']].forEach(([id, k]) =>
     document.querySelectorAll('#' + id + ' button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === S[k]))));
   document.querySelectorAll('#seg-anios button').forEach(b => b.setAttribute('aria-pressed', String(S.anios.has(+b.dataset.y))));
+}
+function attachLocalTools() {
+  document.querySelectorAll('.card').forEach(card => {
+    if (!card.querySelector('.chart') || card.querySelector('.localtools')) return;
+    const title = card.querySelector('h3')?.textContent || 'esta visualización';
+    const bar = document.createElement('div');
+    bar.className = 'localtools';
+    bar.innerHTML = `<span class="local-label">Filtros de esta vista</span><select data-local-key="agencia" aria-label="Institución en ${esc(title)}"><option value="">Todas las instituciones</option>${AGS.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('')}</select><select data-local-key="mecanismo" aria-label="Mecanismo en ${esc(title)}"><option value="">Todos los mecanismos</option>${M.mecanismos.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('')}</select><select data-local-key="necesidad" aria-label="Finalidad en ${esc(title)}"><option value="">Todas las finalidades</option>${M.necesidades.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('')}</select><button type="button" data-local-clear>Limpiar</button><span class="active-count" data-local-count>Sin filtros locales</span>`;
+    card.insertBefore(bar, card.querySelector('.chart'));
+    bar.querySelectorAll('select').forEach(sel => sel.addEventListener('change', () => { S[sel.dataset.localKey] = sel.value; $('f-' + sel.dataset.localKey).value = sel.value; render(); }));
+    bar.querySelector('[data-local-clear]').addEventListener('click', () => { ['agencia','mecanismo','necesidad'].forEach(k => { S[k] = ''; $('f-' + k).value = ''; }); render(); });
+  });
+}
+function syncLocalTools() {
+  document.querySelectorAll('.localtools').forEach(bar => { let n = 0; bar.querySelectorAll('select').forEach(sel => { sel.value = S[sel.dataset.localKey] || ''; if (sel.value) n++; }); const out = bar.querySelector('[data-local-count]'); if (out) out.textContent = n ? `${n} filtro${n > 1 ? 's' : ''} activo${n > 1 ? 's' : ''}` : 'Sin filtros locales'; });
 }
 $('reset').addEventListener('click', () => { Object.assign(S, {gran: 'anual', anios: new Set(ANIOS), agencia: '', mecanismo: '', necesidad: '', metric: 'empresas', dim: 'ninguna', vista: 'apilado'});
   ['agencia', 'mecanismo', 'necesidad'].forEach(k => $('f-' + k).value = ''); syncSeg(); render(); });
@@ -858,17 +918,39 @@ $('prosa').innerHTML = `
 <p>Las <strong>empresas nuevas</strong> son las que reciben su primer apoyo registrado en cualquier institución dentro del período; las recurrentes ya tenían uno anterior. Esta distinción, la circulación entre instituciones y la matriz de empresas compartidas dependen de la identificación única del beneficiario por RUT en la capa interinstitucional del SII-CTI.</p>
 <p>Los instrumentos y líneas corresponden al portafolio clasificado del subconjunto empresarial: ${M.instrumentos.length} instrumentos y ${M.lineas.length} líneas de ocho instituciones. Las convocatorias, solicitudes y empresas son simuladas con órdenes de magnitud plausibles para demostrar el tablero y no describen la realidad de ninguna institución. Estructura de datos: <code>${esc(M.meta.origen_estructura)}</code>. Portafolio: <code>${esc(M.meta.origen_portafolio)}</code>. Fecha de corte: ${HOY.toLocaleDateString('es-UY', {day: 'numeric', month: 'long', year: 'numeric'})}. Consultas: ${esc(M.meta.contacto)}.</p>`;
 
+/* ---------- agenda fusionada ---------- */
+function agendaStatus(c) {
+  const d = new Date(c.apertura + 'T00:00:00');
+  if (d > HOY) return 'Próximo';
+  const ins = INS[c.instrumento_id];
+  return ins && ins.estado === 'VIGENTE' ? 'Abierto' : 'Cerrado';
+}
+function renderAgenda() {
+  const wanted = $('agenda-estado')?.value || '';
+  const rows = convSel().map(c => ({c, estado: agendaStatus(c)})).filter(x => !wanted || x.estado === wanted);
+  const months = [...new Set(rows.map(x => x.c.apertura.slice(0,7)))].sort().slice(-8);
+  const labels = { '01':'ene','02':'feb','03':'mar','04':'abr','05':'may','06':'jun','07':'jul','08':'ago','09':'set','10':'oct','11':'nov','12':'dic' };
+  $('agenda-grid').innerHTML = months.map(key => {
+    const [y,m] = key.split('-'); const rs = rows.filter(x => x.c.apertura.startsWith(key)).slice(0, 12);
+    return `<div class="month"><h3>${labels[m]} ${y}<small style="float:right;color:var(--muted)">${rs.length}</small></h3>${rs.map(x => `<div class="event"><span class="state ${x.estado==='Abierto'?'open':x.estado==='Próximo'?'soon':'closed'}">${x.estado}</span><b>${esc(x.c.instrumento)}</b><small>${esc(x.c.agencia)} · abre ${esc(x.c.apertura)}</small></div>`).join('') || '<div class="event"><small>Sin convocatorias.</small></div>'}</div>`;
+  }).join('') || '<p class="note">No hay convocatorias para los filtros seleccionados.</p>';
+}
+
 /* ---------- render ---------- */
 function render() {
   const cs = convSel(), ss = solSel();
   $('resumen').textContent = `${int(uniq(cs.map(c => c.instrumento_id)).length)} instrumentos · ${int(cs.length)} convocatorias · ${int(ss.length)} solicitudes · ${int(uniq(ss.filter(s => s.otorg).map(s => s.emp)).length)} empresas en la selección`;
   $('evol-table')?.remove(); $('ch-evol').hidden = false; const tb = document.querySelector('[data-tabla]'); tb.setAttribute('aria-pressed', 'false'); tb.textContent = 'Ver tabla';
-  renderTiles(); renderEvol(); renderTree(); renderInstr(); renderEmpresas(); renderEje(); renderTerritorio(); renderSmalls();
+  renderTiles(); renderEvol(); renderTree(); renderInstr(); renderEmpresas(); renderEje(); renderTerritorio(); renderSmalls(); renderAgenda(); syncLocalTools();
 }
 const f = HOY.toLocaleDateString('es-UY', {day: 'numeric', month: 'long', year: 'numeric'});
 $('corte').textContent = 'Corte al ' + f; $('foot').textContent = 'Corte al ' + f + ' · datos de ejecución simulados';
-render();
+attachLocalTools(); render();
 window.MON = {S, agg, render, periodos};
+document.getElementById('agenda-estado')?.addEventListener('change', renderAgenda);
 });
 </script>
 </body></html>
+
+
+
